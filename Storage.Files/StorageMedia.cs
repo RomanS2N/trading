@@ -33,7 +33,9 @@ namespace Storage.Files {
 		}
 
 		public void Save(IStorageContext context, InformationUnitId informationUnit, IStorableData data) {
-			string path = string.Format(@"{0}\{1}\{2}", _rootFolder, context.Name, informationUnit.Name);
+			string folder = string.Format(@"{0}\{1}\", _rootFolder, context.Name);
+			Directory.CreateDirectory(folder);
+			string path = string.Format(@"{0}\{1}", folder, informationUnit.Name);
 			File.WriteAllBytes(path, data.GetBytes());
 		}
 

@@ -43,8 +43,13 @@
     <Compile Include="Session.cs" />
     <Compile Include="SessionFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SessionNameGenerator.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Factory.Shared\Factory.Shared.csproj">
+      <Project>{B0A6C900-73B6-429A-AF90-CC2EF93A9122}</Project>
+      <Name>Factory.Shared</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Storage.Shared\Storage.Shared.csproj">
       <Project>{61F96DE7-D15E-4FD2-B3BA-83AA2B7950BC}</Project>
       <Name>Storage.Shared</Name>

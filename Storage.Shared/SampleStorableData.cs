@@ -23,7 +23,7 @@ using Storage.Shared;
 namespace Storage.Shared {
 	public class SampleStorableData : IStorableData {
 
-		List<int> values = new List<int>();
+		private List<int> _values = new List<int>();
 
 		public SampleStorableData() {
 		}
@@ -35,7 +35,7 @@ namespace Storage.Shared {
 
 		public byte[] GetBytes() {
 			List<byte> bytesList = new List<byte>();
-			values.Select(value =>
+			_values.Select(value =>
 				BitConverter.GetBytes(value))
 					.ToList()
 					.ForEach(bytes =>
@@ -44,14 +44,20 @@ namespace Storage.Shared {
 		}
 
 		public void SetBytes(byte[] bytes) {
-			throw new NotImplementedException();
+			int count = bytes.Length / 4;
+			for (int i = 0; i < count; i++) {
+				_values.Add(BitConverter.ToInt32(bytes, i * 4));
+			}
 		}
 
 		public void AddValue(int value) {
-			values.Add(value);
+			_values.Add(value);
 		}
 
-		public int this(int index) {
+		public int this[int index] {
+			get {
+				return _values[index];
+			}
 		}
 	}
 }

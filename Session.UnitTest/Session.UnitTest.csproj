@@ -49,14 +49,25 @@
     <Compile Include="UnitTest.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Configuration.Lib.AppConfig\Configuration.Lib.AppConfig.csproj">
+      <Project>{54EFDDDF-D5C2-4989-B3C5-1E29EB8E329D}</Project>
+      <Name>Configuration.Lib.AppConfig</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Session.Shared\Session.Shared.csproj">
       <Project>{4A0D89FF-CD8B-41FF-90E3-4075369BCA70}</Project>
       <Name>Session.Shared</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Storage.Files\Storage.Files.csproj">
+      <Project>{5506F5B5-D34F-4585-A1F8-D9620325E834}</Project>
+      <Name>Storage.Files</Name>
     </ProjectReference>
     <ProjectReference Include="..\Storage.Shared\Storage.Shared.csproj">
       <Project>{61F96DE7-D15E-4FD2-B3BA-83AA2B7950BC}</Project>
       <Name>Storage.Shared</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
