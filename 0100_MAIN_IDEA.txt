@@ -1,0 +1,14 @@
+La idea principal de este proyecto es volcar todo el desarrollo de estos años en forma de
+componentes y programas reusables.
+
+Deben poder ser aprovechados independientemente y todo el valor real debe ser examinado
+y tomado para luego colocarlo en un repositorio ordenado y documentado.
+
+La división es:
+
+Documents
+Contiene toda la documentación que vaya construyendo a partir de las revisiones.
+
+Components
+Contiene componentes reutilizables, comprendiendo interfaces públicas, implementaciones,
+junto con sus casos de test y ejemplos de aplicación.
