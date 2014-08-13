@@ -1,14 +1,29 @@
-La idea principal de este proyecto es volcar todo el desarrollo de estos años en forma de
-componentes y programas reusables.
+Copyright 2014 Samuel Pets
 
-Deben poder ser aprovechados independientemente y todo el valor real debe ser examinado
-y tomado para luego colocarlo en un repositorio ordenado y documentado.
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
 
-La división es:
+    http://www.apache.org/licenses/LICENSE-2.0
 
-Documents
-Contiene toda la documentación que vaya construyendo a partir de las revisiones.
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+--------------------------------------------------------------------------------
 
-Components
-Contiene componentes reutilizables, comprendiendo interfaces públicas, implementaciones,
-junto con sus casos de test y ejemplos de aplicación.
+LA IDEA PRINCIPAL DE ESTE PROYECTO ES VOLCAR TODO EL DESARROLLO DE ESTOS AÑOS EN FORMA DE
+COMPONENTES Y PROGRAMAS REUSABLES.
+
+DEBEN PODER SER APROVECHADOS INDEPENDIENTEMENTE Y TODO EL VALOR REAL DEBE SER EXAMINADO
+Y TOMADO PARA LUEGO COLOCARLO EN UN REPOSITORIO ORDENADO Y DOCUMENTADO.
+
+LA DIVISIÓN ES:
+
+DOCUMENTS
+CONTIENE TODA LA DOCUMENTACIÓN QUE VAYA CONSTRUYENDO A PARTIR DE LAS REVISIONES.
+
+COMPONENTS
+CONTIENE COMPONENTES REUTILIZABLES, COMPRENDIENDO INTERFACES PÚBLICAS, IMPLEMENTACIONES,
+JUNTO CON SUS CASOS DE TEST Y EJEMPLOS DE APLICACIÓN.
