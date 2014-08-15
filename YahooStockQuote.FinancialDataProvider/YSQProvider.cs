@@ -46,7 +46,7 @@ namespace YahooStockQuote.FinancialDataProvider {
 				AdjClose = decimal.Parse(parts[6]),
 			};
 		}
-		public ISamplePackage GetHistory(string symbol, DateTime start, DateTime end) {
+		public ISamplePackage GetHistory(string symbol, DateTime start, DateTime end, IProvisionContext provisionContext) {
 			List<string> data = YSQReader.GetHistoricalPrices(symbol, start, end);
 			// first line must be discarded (titles)
 			data.RemoveAt(0);

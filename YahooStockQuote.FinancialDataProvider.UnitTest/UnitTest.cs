@@ -33,8 +33,8 @@ namespace YahooStockQuote.FinancialDataProvider.UnitTest {
 		}
 
 		[TestMethod]
-		public void TestHistoralPrices() {
-			ISamplePackage samplePackage = new YSQProvider().GetHistory("MSFT", new DateTime(2014, 1, 1), new DateTime(2014, 7, 1));
+		public void TestHistoricalPrices() {
+			ISamplePackage samplePackage = new YSQProvider().GetHistory("MSFT", new DateTime(2014, 1, 1), new DateTime(2014, 7, 1), null);
 			Assert.IsTrue(samplePackage is ISamplePackage<IBar>, "samplePackage no es instancia de ISamplePackage<IBar>");
 			IBarPackage barPackage = (IBarPackage)samplePackage;
 			Assert.IsNotNull(barPackage.Samples);
