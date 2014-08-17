@@ -29,8 +29,9 @@ namespace TradingConfiguration.UnitTest {
 			var configuration = Configuration.Instance;
 			var assetsConfiguration = configuration.AssetsConfiguration;
 			var assets = assetsConfiguration.Assets;
-			assets.Add(new AssetConfiguration { Name = "EUR/USD", Type = AssetType.Currency });
-			assets.Add(new AssetConfiguration { Name = "GBP/USD", Type = AssetType.Currency });
+			assets.Clear();
+			assets.Add(new AssetConfiguration { Name = "EUR/USD", ShortName = "EURUSD", Type = AssetType.Currency });
+			assets.Add(new AssetConfiguration { Name = "GBP/USD", ShortName = "GBPUSD", Type = AssetType.Currency });
 			configuration.Save();
 		}
 	}

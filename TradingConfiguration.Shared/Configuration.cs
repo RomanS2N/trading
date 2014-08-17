@@ -18,10 +18,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO;
+using System.Xml.Serialization;
 
 namespace TradingConfiguration.Shared {
 	[Serializable]
 	public class Configuration {
+
+		private static string filepath = @"C:\Configuration.xml";
 
 		private static Configuration _instance;
 		private static object _instanceLock = new object();
@@ -39,16 +43,28 @@ namespace TradingConfiguration.Shared {
 			}
 		}
 
-		private Configuration() { }
+		private Configuration() {
+			AssetsConfiguration = new AssetsConfiguration();
+		}
 
 		public AssetsConfiguration AssetsConfiguration { get; set; }
 
 		private static Configuration Deserialize() {
-			throw new NotImplementedException();
+			if (File.Exists(filepath)) {
+				XmlSerializer serializer = new XmlSerializer(typeof(Configuration));
+				using (StreamReader reader = new StreamReader(filepath)) {
+					Configuration configuration = (Configuration)serializer.Deserialize(reader);
+					return configuration;
+				}
+			}
+			return new Configuration();
 		}
 
 		public void Save() {
-			throw new NotImplementedException();
+			XmlSerializer serializer = new XmlSerializer(typeof(Configuration));
+			TextWriter textWriter = new StreamWriter(filepath);
+			serializer.Serialize(textWriter, this);
+			textWriter.Close();
 		}
 	}
 }

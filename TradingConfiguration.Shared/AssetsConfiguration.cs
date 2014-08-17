@@ -23,5 +23,8 @@ namespace TradingConfiguration.Shared {
 	[Serializable]
 	public class AssetsConfiguration {
 		public List<AssetConfiguration> Assets { get; set; }
+		public AssetsConfiguration() {
+			Assets = new List<AssetConfiguration>();
+		}
 	}
 }
