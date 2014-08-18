@@ -18,6 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using FinancialData.Shared;
 
 namespace TradingConfiguration.Shared {
 	[Serializable]
@@ -25,6 +26,11 @@ namespace TradingConfiguration.Shared {
 		public List<AssetConfiguration> Assets { get; set; }
 		public AssetsConfiguration() {
 			Assets = new List<AssetConfiguration>();
+		}
+		public List<AssetType> AssetsTypes {
+			get {
+				return Assets.Select(x => x.Type).Distinct().ToList();
+			}
 		}
 	}
 }
