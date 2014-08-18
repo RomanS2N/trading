@@ -21,25 +21,25 @@ using System.Text;
 using Storage.Shared;
 
 namespace Session.Shared {
-	public class Session {
+	public class Session : IStorageContextProvider {
 		private object _contextsLock = new object();
-		private Dictionary<InformationUnitType, IStorageContext> _contexts = new Dictionary<InformationUnitType, IStorageContext>();
+		private Dictionary<InformationUnitType, IStorageContext> _storageContexts = new Dictionary<InformationUnitType, IStorageContext>();
 		public string Name { get; private set; }
 		public Session() {
 			Name = SessionNameGenerator.CreateName();
 		}
 		public IStorageContext GetStorageContext(InformationUnitType informationUnitType) {
-			if (!_contexts.ContainsKey(informationUnitType)) {
+			if (!_storageContexts.ContainsKey(informationUnitType)) {
 				lock (_contextsLock) {
-					if (!_contexts.ContainsKey(informationUnitType)) {
-						_contexts[informationUnitType] = Factory.Shared.Factory.Create<IStorageContext>("SessionStorageContext");
-						if (!_contexts[informationUnitType].TryToInitialize(informationUnitType.ToString(), StorageMediaFactory.DefaultMedia)) {
+					if (!_storageContexts.ContainsKey(informationUnitType)) {
+						_storageContexts[informationUnitType] = Factory.Shared.Factory.Create<IStorageContext>("SessionStorageContext");
+						if (!_storageContexts[informationUnitType].TryToInitialize(informationUnitType.ToString(), StorageMediaFactory.DefaultMedia)) {
 							throw new Exception("There was an error building the default storage context based on default media.");
 						}
 					}
 				}
 			}
-			return _contexts[informationUnitType];
+			return _storageContexts[informationUnitType];
 		}
 	}
 }
