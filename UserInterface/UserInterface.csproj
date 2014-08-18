@@ -55,6 +55,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Nodes\Actions\Action.cs" />
+    <Compile Include="Nodes\CurrencyCategoryNode.cs" />
+    <Compile Include="Nodes\CurrencyNode.cs" />
+    <Compile Include="Nodes\Node.cs" />
+    <Compile Include="Nodes\CurrenciesNode.cs" />
+    <Compile Include="ViewModel.cs" />
     <Page Include="Data\Assets\AssetsUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
