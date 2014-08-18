@@ -20,6 +20,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TradingConfiguration.Shared;
+using FinancialData.Shared;
 
 namespace TradingConfiguration.UnitTest {
 	[TestClass]

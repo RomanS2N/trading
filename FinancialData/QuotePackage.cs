@@ -22,11 +22,12 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace FinancialData {
-  public class QuotePackage : IQuotePackage {
-    public SampleType SampleType {
-      get { return SampleType.Quote; }
-    }
-    public List<IQuote> Samples { get; set; }
-    public string Symbol { get; set; }
-  }
+	public class QuotePackage : IQuotePackage {
+		public SampleType SampleType {
+			get { return SampleType.Quote; }
+		}
+		public List<IQuote> Samples { get; set; }
+		public Asset Asset { get; set; }
+		public DataSource Source { get; set; }
+	}
 }

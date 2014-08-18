@@ -21,7 +21,8 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace FinancialData.Shared {
-  public interface IQuotePackage : ISamplePackage<IQuote> {
-    string Symbol { get; set; }
-  }
+	public interface IQuotePackage : ISamplePackage<IQuote> {
+		Asset Asset { get; }
+		DataSource Source { get; }
+	}
 }

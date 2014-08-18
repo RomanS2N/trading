@@ -22,12 +22,13 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace FinancialData {
-  public class BarPackage : IBarPackage {
-    public SampleType SampleType {
-      get { return SampleType.Bar; }
-    }
-    public TimeSpan Period { get; set; }
-    public string Symbol { get; set; }
-    public List<IBar> Samples { get; set; }
-  }
+	public class BarPackage : IBarPackage {
+		public SampleType SampleType {
+			get { return SampleType.Bar; }
+		}
+		public TimeSpan Period { get; set; }
+		public Asset Asset { get; set; }
+		public DataSource Source { get; set; }
+		public List<IBar> Samples { get; set; }
+	}
 }

@@ -24,15 +24,16 @@ using System.Globalization;
 
 namespace DukascopyQuote.FinancialDataProvider {
 	public class DukascopyOfflineProvider : IFinancialDataProvider {
-		public ISample GetPrice(string symbol) {
+		public ISample GetPrice(Asset asset) {
 			throw new NotImplementedException();
 		}
-		private Bar BuildBar(string symbol, TimeSpan period, string text) {
+		private Bar BuildBar(Asset asset, DataSource source, TimeSpan period, string text) {
 			// Time,Open,High,Low,Close,Volume
 			// 01.01.2014 00:00:00.000,1.06180,1.06180,1.06180,1.06180,0.00
 			var parts = text.Split(new char[] { ',' });
 			return new Bar {
-				Symbol = symbol,
+				Asset = asset,
+				Source = source,
 				Period = period,
 				DateTime = DateTime.ParseExact(parts[0], "dd.MM.yyyy HH:mm:ss.fff", CultureInfo.InvariantCulture),
 				Open = decimal.Parse(parts[1]),
@@ -42,17 +43,19 @@ namespace DukascopyQuote.FinancialDataProvider {
 				Volume = (int)decimal.Parse(parts[5]),
 			};
 		}
-		public ISamplePackage GetHistory(string symbol, DateTime start, DateTime end, IProvisionContext provisionContext) {
+		public ISamplePackage GetHistory(Asset asset, DateTime start, DateTime end, IProvisionContext provisionContext) {
 			List<string> data = DukascopyOfflineReader.GetHistoricalPrices(provisionContext.Source);
 			switch (provisionContext.SampleType) {
 				case SampleType.Bar:
 					// first line must be discarded (titles)
 					data.RemoveAt(0);
 					TimeSpan period = provisionContext.Period;
+					DataSource source = new DataSource { Provider = DataProvider.Dukascopy };
 					return new BarPackage {
-						Symbol = symbol,
+						Asset = asset,
+						Source = source,
 						Period = period,
-						Samples = data.Select(line => (IBar)BuildBar(symbol, period, line)).ToList()
+						Samples = data.Select(line => (IBar)BuildBar(asset, source, period, line)).ToList()
 					};
 				case SampleType.Quote:
 				default:

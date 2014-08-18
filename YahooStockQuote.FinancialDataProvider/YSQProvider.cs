@@ -26,16 +26,25 @@ using TimeUtils;
 
 namespace YahooStockQuote.FinancialDataProvider {
 	public class YSQProvider : IFinancialDataProvider {
-		public ISample GetPrice(string symbol) {
-			var price = YSQReader.GetPrice(symbol);
-			return new Quote() { Symbol = symbol, DateTime = Instant.Now, Ask = decimal.Parse(price) };
+		private string GetSymbolForAsset(Asset asset) {
+			switch (asset.Type) {
+				case AssetType.Stock:
+					return asset.Name;
+				default:
+					throw new NotImplementedException();
+			}
 		}
-		private Bar BuildBar(string symbol, TimeSpan period, string text) {
+		public ISample GetPrice(Asset asset) {
+			var price = YSQReader.GetPrice(GetSymbolForAsset(asset));
+			return new Quote() { Asset = asset, Source = new DataSource { Provider = DataProvider.YahooStockQuote }, DateTime = Instant.Now, Ask = decimal.Parse(price) };
+		}
+		private Bar BuildBar(Asset asset, DataSource source, TimeSpan period, string text) {
 			// Date,        Open,   High,   Low,    Close,  Volume,   Adj Close
 			// 2014-07-01,  41.86,  42.15,  41.69,  41.87,  26917000, 41.87
 			var parts = text.Split(new char[] { ',' });
 			return new Bar {
-				Symbol = symbol,
+				Asset = asset,
+				Source = source,
 				Period = period,
 				DateTime = DateTime.ParseExact(parts[0], "yyyy-MM-dd", CultureInfo.InvariantCulture),
 				Open = decimal.Parse(parts[1]),
@@ -46,15 +55,17 @@ namespace YahooStockQuote.FinancialDataProvider {
 				AdjClose = decimal.Parse(parts[6]),
 			};
 		}
-		public ISamplePackage GetHistory(string symbol, DateTime start, DateTime end, IProvisionContext provisionContext) {
-			List<string> data = YSQReader.GetHistoricalPrices(symbol, start, end);
+		public ISamplePackage GetHistory(Asset asset, DateTime start, DateTime end, IProvisionContext provisionContext) {
+			List<string> data = YSQReader.GetHistoricalPrices(GetSymbolForAsset(asset), start, end);
+			DataSource source = new DataSource { Provider = DataProvider.YahooStockQuote };
 			// first line must be discarded (titles)
 			data.RemoveAt(0);
 			TimeSpan period = TimeSpan.FromMinutes(1);
 			return new BarPackage {
-				Symbol = symbol,
+				Asset = asset,
+				Source = source,
 				Period = period,
-				Samples = data.Select(line => (IBar)BuildBar(symbol, period, line)).ToList()
+				Samples = data.Select(line => (IBar)BuildBar(asset, source, period, line)).ToList()
 			};
 		}
 	}

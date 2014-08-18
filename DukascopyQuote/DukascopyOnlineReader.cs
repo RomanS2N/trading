@@ -18,11 +18,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
-namespace FinancialData.Shared {
-	public interface IFinancialDataProvider {
-		ISample GetPrice(Asset asset);
-		ISamplePackage GetHistory(Asset asset, DateTime start, DateTime end, IProvisionContext provisionContext);
+namespace DukascopyQuote {
+	public class DukascopyOnlineReader {
 	}
 }

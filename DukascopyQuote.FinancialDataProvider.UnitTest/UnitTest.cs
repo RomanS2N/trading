@@ -33,7 +33,7 @@ namespace DukascopyQuote.FinancialDataProvider.UnitTest {
 		public void TestHistoricalPrices() {
 			ISamplePackage samplePackage = new DukascopyOfflineProvider()
 				.GetHistory(
-					"EUR/USD",
+					new Asset { Name = "EUR/USD", Type = AssetType.Currency },
 					new DateTime(2014, 1, 1),
 					new DateTime(2014, 1, 31),
 					new DukascopyOfflineContext(
@@ -44,7 +44,8 @@ namespace DukascopyQuote.FinancialDataProvider.UnitTest {
 			IBarPackage barPackage = (IBarPackage)samplePackage;
 			Assert.IsNotNull(barPackage.Samples);
 			Assert.IsTrue(barPackage.Samples.Count > 0);
-			Assert.IsNotNull(barPackage.Symbol);
+			Assert.IsNotNull(barPackage.Asset);
+			Assert.IsNotNull(barPackage.Source);
 			Assert.IsNotNull(barPackage.Period);
 		}
 	}

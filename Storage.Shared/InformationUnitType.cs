@@ -23,7 +23,6 @@ namespace Storage.Shared {
 	public enum InformationUnitType {
 		Temporal,
 		Prices,
-		Ticks,
 		Quotes,
 		Bars,
 	}
