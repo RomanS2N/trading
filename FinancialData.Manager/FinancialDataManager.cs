@@ -27,9 +27,28 @@ namespace FinancialData.Manager {
 
 		public Dictionary<Asset, List<DataSource>> AssetDataSources { get; set; }
 
-		public FinancialDataManager() {
+		#region Singleton
+
+		private static FinancialDataManager _instance;
+		private static object _instanceLock = new object();
+		public static FinancialDataManager Instance {
+			get {
+				if (_instance == null) {
+					lock (_instanceLock) {
+						if (_instance == null) {
+							_instance = new FinancialDataManager();
+						}
+					}
+				}
+				return _instance;
+			}
+		}
+
+		private FinancialDataManager() {
 			AssetDataSources = new Dictionary<Asset, List<DataSource>>();
 		}
+
+		#endregion
 
 		public List<Asset> GetAssets() {
 			return AssetDataSources.Keys.ToList();

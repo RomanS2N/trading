@@ -68,5 +68,10 @@ namespace YahooStockQuote.FinancialDataProvider {
 				Samples = data.Select(line => (IBar)BuildBar(asset, source, period, line)).ToList()
 			};
 		}
+
+
+		public ISamplePackage GetHistory(Asset asset, DateTime start, DateTime end, IProvisionContext provisionContext, Func<ISample, bool> func) {
+			throw new NotImplementedException();
+		}
 	}
 }

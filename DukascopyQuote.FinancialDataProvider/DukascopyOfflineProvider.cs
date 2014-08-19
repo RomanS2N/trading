@@ -24,6 +24,29 @@ using System.Globalization;
 
 namespace DukascopyQuote.FinancialDataProvider {
 	public class DukascopyOfflineProvider : IFinancialDataProvider {
+
+		#region Singleton
+
+		private static DukascopyOfflineProvider _instance;
+		private static object _instanceLock = new object();
+		public static DukascopyOfflineProvider Instance {
+			get {
+				if (_instance == null) {
+					lock (_instanceLock) {
+						if (_instance == null) {
+							_instance = new DukascopyOfflineProvider();
+						}
+					}
+				}
+				return _instance;
+			}
+		}
+
+		private DukascopyOfflineProvider() {
+		}
+
+		#endregion
+
 		public ISample GetPrice(Asset asset) {
 			throw new NotImplementedException();
 		}
@@ -61,6 +84,11 @@ namespace DukascopyQuote.FinancialDataProvider {
 				default:
 					throw new NotImplementedException();
 			}
+		}
+
+
+		public ISamplePackage GetHistory(Asset asset, DateTime start, DateTime end, IProvisionContext provisionContext, Func<ISample, bool> func) {
+			throw new NotImplementedException();
 		}
 	}
 }

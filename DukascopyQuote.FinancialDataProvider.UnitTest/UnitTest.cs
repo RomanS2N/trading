@@ -31,7 +31,7 @@ namespace DukascopyQuote.FinancialDataProvider.UnitTest {
 
 		[TestMethod]
 		public void TestHistoricalPrices() {
-			ISamplePackage samplePackage = new DukascopyOfflineProvider()
+			ISamplePackage samplePackage = DukascopyOfflineProvider.Instance
 				.GetHistory(
 					new Asset { Name = "EUR/USD", Type = AssetType.Currency },
 					new DateTime(2014, 1, 1),

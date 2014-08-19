@@ -22,12 +22,14 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using FinancialData.Manager.Shared;
 using TradingConfiguration.Shared;
 using FinancialData.Shared;
+using DukascopyQuote.FinancialDataProvider;
 
 namespace FinancialData.Manager.UnitTest {
 	[TestClass]
 	public class UnitTest {
 		[TestMethod]
 		public void TestMethod() {
+#if _
 			// pre-configuro los assets
 			var assetsConfiguration = Configuration.Instance.AssetsConfiguration;
 			assetsConfiguration.Assets.Clear();
@@ -37,8 +39,30 @@ namespace FinancialData.Manager.UnitTest {
 					ShortName = "EURUSD",
 					Type = AssetType.Currency
 				});
-			// instancio el FinancialDataManager
-			IFinancialDataStore store = new FinancialDataManager();
+#endif
+
+			Asset asset = new Asset { Name = "EUR/USD", Type = AssetType.Currency };
+			DataSource source = new DataSource{Provider = DataProvider.Dukascopy};
+			DukascopyOfflineProvider.Instance.GetHistory(
+				asset,
+				new DateTime(2000, 1, 1),
+				new DateTime(2015, 1, 1),
+				new DukascopyOfflineContext(@"C:\hfdata\Temp\EURUSD_DUKAS_TICKS.txt", SampleType.Quote, TimeSpan.Zero),
+				(Func<ISample, bool>)(sample => {
+					IQuote quote = new Quote {
+						sample
+						Asset = asset,
+						Source = source,
+						DateTime
+						Ask
+						AskSize = 0,
+						Bid
+						BidSize = 0,
+					};
+					FinancialDataManager.Instance.AddQuote(quote);
+					return true;
+				}));
+
 		}
 	}
 }

@@ -25,6 +25,8 @@ namespace TradingConfiguration.Shared {
 	[Serializable]
 	public class Configuration {
 
+		#region Singleton
+
 		private static string filepath = @"C:\Configuration.xml";
 
 		private static Configuration _instance;
@@ -43,12 +45,6 @@ namespace TradingConfiguration.Shared {
 			}
 		}
 
-		private Configuration() {
-			AssetsConfiguration = new AssetsConfiguration();
-		}
-
-		public AssetsConfiguration AssetsConfiguration { get; set; }
-
 		private static Configuration Deserialize() {
 			if (File.Exists(filepath)) {
 				XmlSerializer serializer = new XmlSerializer(typeof(Configuration));
@@ -66,5 +62,19 @@ namespace TradingConfiguration.Shared {
 			serializer.Serialize(textWriter, this);
 			textWriter.Close();
 		}
+
+		#endregion
+
+		private Configuration() {
+			AssetsConfiguration = new AssetsConfiguration();
+			ResearchConfiguration = new ResearchConfiguration();
+			ExecutionConfiguration = new ExecutionConfiguration();
+		}
+
+		public AssetsConfiguration AssetsConfiguration { get; set; }
+
+		public ResearchConfiguration ResearchConfiguration { get; set; }
+
+		public ExecutionConfiguration ExecutionConfiguration { get; set; }
 	}
 }

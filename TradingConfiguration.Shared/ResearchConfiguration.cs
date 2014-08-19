@@ -18,18 +18,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.IO;
 
-namespace DukascopyQuote {
-	public class DukascopyOfflineReader {
-		public static List<string> GetHistoricalPrices(string filepath) {
-			return File.ReadAllLines(filepath).ToList();
-		}
-		public static void GetHistoricalPrices(string filepath, Func<string, bool> func) {
-			using (StreamReader reader = File.OpenText(filepath)) {
-				string line = reader.ReadLine();
-				while (line != null && func(line)) { }
-			}
-		}
+namespace TradingConfiguration.Shared {
+	[Serializable]
+	public class ResearchConfiguration {
 	}
 }

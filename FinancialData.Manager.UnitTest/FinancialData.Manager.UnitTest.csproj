@@ -49,6 +49,10 @@
     <Compile Include="UnitTest.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DukascopyQuote.FinancialDataProvider\DukascopyQuote.FinancialDataProvider.csproj">
+      <Project>{DB6C8E1D-924F-423B-A685-FB441A5A9C55}</Project>
+      <Name>DukascopyQuote.FinancialDataProvider</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FinancialData.Manager.Shared\FinancialData.Manager.Shared.csproj">
       <Project>{2B7D59C3-B2B9-4824-B6D6-6B39605A28A0}</Project>
       <Name>FinancialData.Manager.Shared</Name>
@@ -60,6 +64,10 @@
     <ProjectReference Include="..\FinancialData.Shared\FinancialData.Shared.csproj">
       <Project>{8FB9707D-8797-482B-A6DC-FE5D964EC555}</Project>
       <Name>FinancialData.Shared</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FinancialData\FinancialData.csproj">
+      <Project>{10D2E9D9-B617-4612-B78B-182510BD0F49}</Project>
+      <Name>FinancialData</Name>
     </ProjectReference>
     <ProjectReference Include="..\TradingConfiguration.Shared\TradingConfiguration.Shared.csproj">
       <Project>{5F12D93A-7C84-400E-9D2B-84D1D7D2C5C4}</Project>
