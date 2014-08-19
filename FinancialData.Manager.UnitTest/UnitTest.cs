@@ -28,41 +28,33 @@ namespace FinancialData.Manager.UnitTest {
 	[TestClass]
 	public class UnitTest {
 		[TestMethod]
-		public void TestMethod() {
-#if _
-			// pre-configuro los assets
-			var assetsConfiguration = Configuration.Instance.AssetsConfiguration;
-			assetsConfiguration.Assets.Clear();
-			assetsConfiguration.Assets.Add(
-				new AssetConfiguration {
-					Name = "EUR/USD",
-					ShortName = "EURUSD",
-					Type = AssetType.Currency
-				});
-#endif
-
+		public void FinancialDataManagerTest() {
 			Asset asset = new Asset { Name = "EUR/USD", Type = AssetType.Currency };
-			DataSource source = new DataSource{Provider = DataProvider.Dukascopy};
-			DukascopyOfflineProvider.Instance.GetHistory(
+			IDataSource source = new DukascopyDataSource();
+			DukascopyOfflineProvider.Instance.AsyncGetHistory(
 				asset,
 				new DateTime(2000, 1, 1),
 				new DateTime(2015, 1, 1),
 				new DukascopyOfflineContext(@"C:\hfdata\Temp\EURUSD_DUKAS_TICKS.txt", SampleType.Quote, TimeSpan.Zero),
 				(Func<ISample, bool>)(sample => {
-					IQuote quote = new Quote {
-						sample
-						Asset = asset,
-						Source = source,
-						DateTime
-						Ask
-						AskSize = 0,
-						Bid
-						BidSize = 0,
-					};
-					FinancialDataManager.Instance.AddQuote(quote);
+					FinancialDataManager.Instance.AddQuote((IQuote)sample);
 					return true;
 				}));
-
+		}
+		[TestMethod]
+		public void FinancialDataBufferTest() {
+			Asset asset = new Asset { Name = "EUR/USD", Type = AssetType.Currency };
+			IDataSource source = new DukascopyDataSource();
+			FinancialDataBuffer buffer = new FinancialDataBuffer(10000);
+			DukascopyOfflineProvider.Instance.AsyncGetHistory(
+				asset,
+				new DateTime(2000, 1, 1),
+				new DateTime(2015, 1, 1),
+				new DukascopyOfflineContext(@"C:\hfdata\Temp\EURUSD_DUKAS_TICKS.txt", SampleType.Quote, TimeSpan.Zero),
+				(Func<ISample, bool>)(sample => {
+					buffer.AddQuote((IQuote)sample);
+					return true;
+				}));
 		}
 	}
 }

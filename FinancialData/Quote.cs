@@ -20,11 +20,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TimeUtils;
 
 namespace FinancialData {
 	public class Quote : IQuote {
 		public Asset Asset { get; set; }
-		public DataSource Source { get; set; }
+		public IDataSource Source { get; set; }
 		public DateTime DateTime { get; set; }
 		public decimal Ask { get; set; }
 		public int AskSize { get; set; }
@@ -33,6 +34,19 @@ namespace FinancialData {
 
 		public SampleType SampleType {
 			get { return SampleType.Quote; }
+		}
+
+		public static Quote From3PartsString(string line, Shared.Asset asset, IDataSource source) {
+			var parts = line.Split(new char[] { ',' });
+			return new Quote {
+				Asset = asset,
+				Source = source,
+				DateTime = Instant.FromMillisAfterEpoch(long.Parse(parts[0])),
+				Ask = source.ConvertPrice(decimal.Parse(parts[1])),
+				AskSize = 0,
+				Bid = source.ConvertPrice(decimal.Parse(parts[2])),
+				BidSize = 0,
+			};
 		}
 	}
 }

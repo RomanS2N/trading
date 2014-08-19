@@ -50,6 +50,10 @@
       <Project>{8fb9707d-8797-482b-a6dc-fe5d964ec555}</Project>
       <Name>FinancialData.Shared</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TimeUtils\TimeUtils.csproj">
+      <Project>{8BC24945-2E0B-4788-9420-1A52E406C731}</Project>
+      <Name>TimeUtils</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

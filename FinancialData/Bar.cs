@@ -27,7 +27,7 @@ namespace FinancialData {
       get { return SampleType.Bar; }
     }
 	public Asset Asset { get; set; }
-	public DataSource Source { get; set; }
+	public IDataSource Source { get; set; }
     public TimeSpan Period { get; set; }
     public DateTime DateTime { get; set; }
     public decimal Open { get; set; }

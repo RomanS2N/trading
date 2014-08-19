@@ -24,6 +24,6 @@ namespace FinancialData.Shared {
 	public interface IFinancialDataProvider {
 		ISample GetPrice(Asset asset);
 		ISamplePackage GetHistory(Asset asset, DateTime start, DateTime end, IProvisionContext provisionContext);
-		ISamplePackage GetHistory(Asset asset, DateTime start, DateTime end, IProvisionContext provisionContext, Func<ISample, bool> func);
+		void AsyncGetHistory(Asset asset, DateTime start, DateTime end, IProvisionContext provisionContext, Func<ISample, bool> func);
 	}
 }

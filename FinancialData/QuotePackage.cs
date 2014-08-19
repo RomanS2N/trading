@@ -28,6 +28,6 @@ namespace FinancialData {
 		}
 		public List<IQuote> Samples { get; set; }
 		public Asset Asset { get; set; }
-		public DataSource Source { get; set; }
+		public IDataSource Source { get; set; }
 	}
 }

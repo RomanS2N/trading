@@ -28,7 +28,7 @@ namespace FinancialData {
 		}
 		public TimeSpan Period { get; set; }
 		public Asset Asset { get; set; }
-		public DataSource Source { get; set; }
+		public IDataSource Source { get; set; }
 		public List<IBar> Samples { get; set; }
 	}
 }

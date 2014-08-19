@@ -36,9 +36,9 @@ namespace YahooStockQuote.FinancialDataProvider {
 		}
 		public ISample GetPrice(Asset asset) {
 			var price = YSQReader.GetPrice(GetSymbolForAsset(asset));
-			return new Quote() { Asset = asset, Source = new DataSource { Provider = DataProvider.YahooStockQuote }, DateTime = Instant.Now, Ask = decimal.Parse(price) };
+			return new Quote() { Asset = asset, Source = new YQSDataSource(), DateTime = Instant.Now, Ask = decimal.Parse(price) };
 		}
-		private Bar BuildBar(Asset asset, DataSource source, TimeSpan period, string text) {
+		private Bar BuildBar(Asset asset, IDataSource source, TimeSpan period, string text) {
 			// Date,        Open,   High,   Low,    Close,  Volume,   Adj Close
 			// 2014-07-01,  41.86,  42.15,  41.69,  41.87,  26917000, 41.87
 			var parts = text.Split(new char[] { ',' });
@@ -57,7 +57,7 @@ namespace YahooStockQuote.FinancialDataProvider {
 		}
 		public ISamplePackage GetHistory(Asset asset, DateTime start, DateTime end, IProvisionContext provisionContext) {
 			List<string> data = YSQReader.GetHistoricalPrices(GetSymbolForAsset(asset), start, end);
-			DataSource source = new DataSource { Provider = DataProvider.YahooStockQuote };
+			IDataSource source = new YQSDataSource();
 			// first line must be discarded (titles)
 			data.RemoveAt(0);
 			TimeSpan period = TimeSpan.FromMinutes(1);
@@ -68,9 +68,7 @@ namespace YahooStockQuote.FinancialDataProvider {
 				Samples = data.Select(line => (IBar)BuildBar(asset, source, period, line)).ToList()
 			};
 		}
-
-
-		public ISamplePackage GetHistory(Asset asset, DateTime start, DateTime end, IProvisionContext provisionContext, Func<ISample, bool> func) {
+		public void AsyncGetHistory(Asset asset, DateTime start, DateTime end, IProvisionContext provisionContext, Func<ISample, bool> func) {
 			throw new NotImplementedException();
 		}
 	}

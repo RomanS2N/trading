@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DukascopyDataSource.cs" />
     <Compile Include="DukascopyOfflineContext.cs" />
     <Compile Include="DukascopyOfflineProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

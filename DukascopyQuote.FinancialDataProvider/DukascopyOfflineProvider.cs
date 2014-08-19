@@ -50,7 +50,7 @@ namespace DukascopyQuote.FinancialDataProvider {
 		public ISample GetPrice(Asset asset) {
 			throw new NotImplementedException();
 		}
-		private Bar BuildBar(Asset asset, DataSource source, TimeSpan period, string text) {
+		private Bar BuildBar(Asset asset, IDataSource source, TimeSpan period, string text) {
 			// Time,Open,High,Low,Close,Volume
 			// 01.01.2014 00:00:00.000,1.06180,1.06180,1.06180,1.06180,0.00
 			var parts = text.Split(new char[] { ',' });
@@ -73,7 +73,7 @@ namespace DukascopyQuote.FinancialDataProvider {
 					// first line must be discarded (titles)
 					data.RemoveAt(0);
 					TimeSpan period = provisionContext.Period;
-					DataSource source = new DataSource { Provider = DataProvider.Dukascopy };
+					IDataSource source = new DukascopyDataSource();
 					return new BarPackage {
 						Asset = asset,
 						Source = source,
@@ -87,8 +87,13 @@ namespace DukascopyQuote.FinancialDataProvider {
 		}
 
 
-		public ISamplePackage GetHistory(Asset asset, DateTime start, DateTime end, IProvisionContext provisionContext, Func<ISample, bool> func) {
-			throw new NotImplementedException();
+		public void AsyncGetHistory(Asset asset, DateTime start, DateTime end, IProvisionContext provisionContext, Func<ISample, bool> func) {
+			IDataSource source = new DukascopyDataSource();
+			DukascopyOfflineReader.GetHistoricalPrices(
+				provisionContext.Source,
+				(Func<string, bool>)(line => {
+					return func(Quote.From3PartsString(line, asset, source));
+				}));
 		}
 	}
 }

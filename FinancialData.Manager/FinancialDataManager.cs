@@ -21,11 +21,12 @@ using System.Text;
 using FinancialData.Manager.Shared;
 using FinancialData.Shared;
 using TradingConfiguration.Shared;
+using Context.Shared;
 
 namespace FinancialData.Manager {
 	public class FinancialDataManager : IFinancialDataStore {
 
-		public Dictionary<Asset, List<DataSource>> AssetDataSources { get; set; }
+		public Dictionary<Asset, List<IDataSource>> AssetDataSources { get; set; }
 
 		#region Singleton
 
@@ -45,36 +46,51 @@ namespace FinancialData.Manager {
 		}
 
 		private FinancialDataManager() {
-			AssetDataSources = new Dictionary<Asset, List<DataSource>>();
+			AssetDataSources = new Dictionary<Asset, List<IDataSource>>();
 		}
 
 		#endregion
+
+		#region Assets
 
 		public List<Asset> GetAssets() {
 			return AssetDataSources.Keys.ToList();
 		}
 
-		public List<Asset> GetAssets(DataSource source) {
+		public List<Asset> GetAssets(IDataSource source) {
 			return AssetDataSources
 				.Where(pair => pair.Value.Contains(source))
 				.Select(pair => pair.Key)
 				.ToList();
 		}
 
-		public List<DataSource> GetDataSources() {
+		#endregion
+
+		#region DataSources
+
+		public List<IDataSource> GetDataSources() {
 			return AssetDataSources.SelectMany(pair => pair.Value).Distinct().ToList();
 		}
 
-		public List<DataSource> GetDataSources(Asset asset) {
+		public List<IDataSource> GetDataSources(Asset asset) {
 			return AssetDataSources[asset];
 		}
 
+		#endregion
+
+		#region Quotes
+
 		public void AddQuote(IQuote quote) {
 			if (!AssetDataSources.ContainsKey(quote.Asset))
-				AssetDataSources[quote.Asset] = new List<DataSource>();
+				AssetDataSources[quote.Asset] = new List<IDataSource>();
 			if (!AssetDataSources[quote.Asset].Contains(quote.Source))
 				AssetDataSources[quote.Asset].Add(quote.Source);
 			StoreQuote(quote);
+		}
+
+		public void AddQuotes(List<IQuote> quotes, bool preserveOldData) {
+			var research = ContextFactory.GetContext(UniqueContextType.Research);
+			var historicalData = ContextFactory.GetSubcontext(research, ContextType.HistoricalData);
 		}
 
 		private void StoreQuote(IQuote quote) {
@@ -89,11 +105,11 @@ namespace FinancialData.Manager {
 			throw new NotImplementedException();
 		}
 
-		public void ClearQuotes(Asset asset, DataSource source) {
+		public void ClearQuotes(Asset asset, IDataSource source) {
 			throw new NotImplementedException();
 		}
 
-		public void ClearQuotes(DataSource source) {
+		public void ClearQuotes(IDataSource source) {
 			throw new NotImplementedException();
 		}
 
@@ -105,12 +121,14 @@ namespace FinancialData.Manager {
 			throw new NotImplementedException();
 		}
 
-		public int GetQuotesCount(Asset asset, DataSource source) {
+		public int GetQuotesCount(Asset asset, IDataSource source) {
 			throw new NotImplementedException();
 		}
 
-		public int GetQuotesCount(DataSource source) {
+		public int GetQuotesCount(IDataSource source) {
 			throw new NotImplementedException();
 		}
+
+		#endregion
 	}
 }

@@ -20,7 +20,8 @@ using System.Linq;
 using System.Text;
 
 namespace FinancialData.Shared {
-	public class DataSource {
-		public DataProvider Provider { get; set; }
+	public interface IDataSource {
+		DataProvider Provider { get; }
+		decimal ConvertPrice(decimal price);
 	}
 }

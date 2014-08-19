@@ -40,10 +40,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FinancialDataBuffer.cs" />
     <Compile Include="FinancialDataManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Context.Shared\Context.Shared.csproj">
+      <Project>{2E14D6D4-B61B-44AF-BD1B-F0BA2C09B3D7}</Project>
+      <Name>Context.Shared</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FinancialData.Manager.Shared\FinancialData.Manager.Shared.csproj">
       <Project>{2B7D59C3-B2B9-4824-B6D6-6B39605A28A0}</Project>
       <Name>FinancialData.Manager.Shared</Name>

@@ -33,5 +33,10 @@ namespace Context.Shared {
 			}
 			return _contexts[type];
 		}
+
+		public static object GetSubcontext(Context context, ContextType contextType) {
+			context.Subcontexts.
+			throw new NotImplementedException();
+		}
 	}
 }

@@ -24,6 +24,6 @@ namespace FinancialData.Shared {
 	public interface IBarPackage : ISamplePackage<IBar> {
 		TimeSpan Period { get; set; }
 		Asset Asset { get; }
-		DataSource Source { get; }
+		IDataSource Source { get; }
 	}
 }

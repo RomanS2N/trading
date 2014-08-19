@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="Context.cs" />
     <Compile Include="ContextFactory.cs" />
+    <Compile Include="ContextType.cs" />
     <Compile Include="UniqueContextType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

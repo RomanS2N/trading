@@ -23,6 +23,6 @@ using System.Threading.Tasks;
 namespace FinancialData.Shared {
 	public interface IQuotePackage : ISamplePackage<IQuote> {
 		Asset Asset { get; }
-		DataSource Source { get; }
+		IDataSource Source { get; }
 	}
 }

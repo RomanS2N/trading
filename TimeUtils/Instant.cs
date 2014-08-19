@@ -21,11 +21,18 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace TimeUtils {
-  public class Instant {
-    public static DateTime Now {
-      get {
-        return DateTime.UtcNow;
-      }
-    }
-  }
+	public class Instant {
+		
+		private static DateTime _epoch = new DateTime(1970, 1, 1);
+
+		public static DateTime Now {
+			get {
+				return DateTime.UtcNow;
+			}
+		}
+
+		public static DateTime FromMillisAfterEpoch(long millis) {
+			return _epoch.AddMilliseconds(millis);
+		}
+	}
 }
