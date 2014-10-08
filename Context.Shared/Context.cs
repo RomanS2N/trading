@@ -29,7 +29,7 @@ namespace Context.Shared {
 
 		public UniqueContextType ContextType { get; private set; }
 
-		public Subcontexts
+		//public Subcontexts
 
 		public Context(UniqueContextType contextType) {
 			ContextType = contextType;

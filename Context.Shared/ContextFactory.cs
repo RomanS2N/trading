@@ -35,7 +35,7 @@ namespace Context.Shared {
 		}
 
 		public static object GetSubcontext(Context context, ContextType contextType) {
-			context.Subcontexts.
+			//context.Subcontexts.
 			throw new NotImplementedException();
 		}
 	}
