@@ -46,10 +46,11 @@ namespace FinancialIndicator {
         _index = 0;
       }
     }
-
-
-	public bool HasValue {
-		get { throw new NotImplementedException(); }
-	}
+    public bool HasValue {
+      get { throw new NotImplementedException(); }
+    }
+    public string Identifier {
+      get { return string.Format("SMA_{0}", _period); }
+    }
   }
 }

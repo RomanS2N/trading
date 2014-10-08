@@ -15,9 +15,9 @@
 */
 
 using BarsReading;
+using FinancialIndicator;
 using FinancialSeries.Shared;
 using FinancialSeriesUtils;
-using Indicators;
 using SeriesReading.Descriptor.Quotes;
 using System;
 using System.Collections.Generic;

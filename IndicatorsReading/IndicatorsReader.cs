@@ -14,8 +14,8 @@
    limitations under the License.
 */
 
+using FinancialIndicator.Shared;
 using FinancialSeries.Shared;
-using Indicators.Shared;
 using System;
 using System.Collections.Generic;
 using System.IO;

@@ -44,13 +44,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\FinancialIndicator.Shared\FinancialIndicator.Shared.csproj">
+      <Project>{c314738e-78d6-442c-8a6b-8574803e73eb}</Project>
+      <Name>FinancialIndicator.Shared</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FinancialSeries.Shared\FinancialSeries.Shared.csproj">
       <Project>{af1083a0-9249-4cce-a6a0-1b0b9b2475aa}</Project>
       <Name>FinancialSeries.Shared</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Indicators.Shared\Indicators.Shared.csproj">
-      <Project>{917619d3-fa8f-4da5-bc5c-7a08bea044be}</Project>
-      <Name>Indicators.Shared</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

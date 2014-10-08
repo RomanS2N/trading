@@ -14,14 +14,14 @@
    limitations under the License.
 */
 
-using Indicators.Shared;
+using FinancialIndicator.Shared;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace Indicators {
+namespace FinancialIndicator {
   public class IndicatorsCreatorItem {
     public IFinancialIndicator Indicator { get; private set; }
     private List<decimal> _values = new List<decimal>();

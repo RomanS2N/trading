@@ -21,9 +21,10 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace FinancialIndicator.Shared {
-	public interface IFinancialIndicator {
-		void Update(decimal price);
-		decimal Value { get; }
-		bool HasValue { get; }
-	}
+  public interface IFinancialIndicator {
+    string Identifier { get; }
+    void Update(decimal price);
+    decimal Value { get; }
+    bool HasValue { get; }
+  }
 }

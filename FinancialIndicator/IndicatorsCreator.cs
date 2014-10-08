@@ -14,13 +14,13 @@
    limitations under the License.
 */
 
-using Indicators.Shared;
+using FinancialIndicator.Shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Indicators {
+namespace FinancialIndicator {
   public class IndicatorsCreator {
     private List<IndicatorsCreatorItem> _indicatorsCreatorItems = new List<IndicatorsCreatorItem>();
     public TimeSpan TimeFrame { get; private set; }

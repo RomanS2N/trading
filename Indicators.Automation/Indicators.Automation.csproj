@@ -47,6 +47,14 @@
       <Project>{b2d14a97-8849-488b-baf4-f28ce8f72fe1}</Project>
       <Name>BarsReading</Name>
     </ProjectReference>
+    <ProjectReference Include="..\FinancialIndicator.Shared\FinancialIndicator.Shared.csproj">
+      <Project>{c314738e-78d6-442c-8a6b-8574803e73eb}</Project>
+      <Name>FinancialIndicator.Shared</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FinancialIndicator\FinancialIndicator.csproj">
+      <Project>{eb58314a-fc1a-4f1b-86ef-84e763f3d1cf}</Project>
+      <Name>FinancialIndicator</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FinancialSeries.Shared\FinancialSeries.Shared.csproj">
       <Project>{af1083a0-9249-4cce-a6a0-1b0b9b2475aa}</Project>
       <Name>FinancialSeries.Shared</Name>
@@ -54,14 +62,6 @@
     <ProjectReference Include="..\FinancialSeriesUtils\FinancialSeriesUtils.csproj">
       <Project>{861c6542-4ec4-4f29-aff4-30fe811a9502}</Project>
       <Name>FinancialSeriesUtils</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Indicators.Shared\Indicators.Shared.csproj">
-      <Project>{917619d3-fa8f-4da5-bc5c-7a08bea044be}</Project>
-      <Name>Indicators.Shared</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Indicators\Indicators.csproj">
-      <Project>{200ff664-2734-4df2-bebb-42f78bb2b16d}</Project>
-      <Name>Indicators</Name>
     </ProjectReference>
     <ProjectReference Include="..\SeriesReading.Shared\SeriesReading.Shared.csproj">
       <Project>{c63cb24c-8a59-4ff8-a9c3-9caf337715a2}</Project>

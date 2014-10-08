@@ -39,6 +39,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IndicatorsCreator.cs" />
+    <Compile Include="IndicatorsCreatorItem.cs" />
     <Compile Include="RSI.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SMA.cs" />
