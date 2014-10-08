@@ -26,5 +26,6 @@ namespace FinancialData.Shared {
 		CurrencyFuture,
 		CurrencyForward,
 		Stock,
+        Index,
 	}
 }

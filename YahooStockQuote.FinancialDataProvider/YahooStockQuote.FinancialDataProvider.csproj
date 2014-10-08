@@ -42,6 +42,7 @@
     <Compile Include="YQSDataSource.cs" />
     <Compile Include="YSQProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="YSQSymbol.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FinancialData.Shared\FinancialData.Shared.csproj">

@@ -24,7 +24,7 @@ namespace FinancialData.Shared {
   public interface ISamplePackage {
     SampleType SampleType { get; }
   }
-  public interface ISamplePackage<T> : ISamplePackage {
+  public interface ISamplePackage<T> : ISamplePackage where T : ISample {
     List<T> Samples { get; }
   }
 }

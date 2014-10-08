@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{A620D720-8CE3-48D7-872F-751554E71338}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>IndicatorsReading.Program</RootNamespace>
+    <AssemblyName>IndicatorsReading.Program</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BarsReading\BarsReading.csproj">
+      <Project>{b2d14a97-8849-488b-baf4-f28ce8f72fe1}</Project>
+      <Name>BarsReading</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FinancialSeries.Shared\FinancialSeries.Shared.csproj">
+      <Project>{af1083a0-9249-4cce-a6a0-1b0b9b2475aa}</Project>
+      <Name>FinancialSeries.Shared</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FinancialSeriesUtils\FinancialSeriesUtils.csproj">
+      <Project>{861c6542-4ec4-4f29-aff4-30fe811a9502}</Project>
+      <Name>FinancialSeriesUtils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Indicators.Shared\Indicators.Shared.csproj">
+      <Project>{917619d3-fa8f-4da5-bc5c-7a08bea044be}</Project>
+      <Name>Indicators.Shared</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\IndicatorsReading\IndicatorsReading.csproj">
+      <Project>{19253bca-7ebf-4843-9204-e7f99b5462bf}</Project>
+      <Name>IndicatorsReading</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Indicators\Indicators.csproj">
+      <Project>{200ff664-2734-4df2-bebb-42f78bb2b16d}</Project>
+      <Name>Indicators</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SeriesReading.Shared\SeriesReading.Shared.csproj">
+      <Project>{c63cb24c-8a59-4ff8-a9c3-9caf337715a2}</Project>
+      <Name>SeriesReading.Shared</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SeriesReading\SeriesReading.csproj">
+      <Project>{37e1ca69-6c8f-4af1-b528-eb92f985af3d}</Project>
+      <Name>SeriesReading</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

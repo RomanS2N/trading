@@ -21,7 +21,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace FinancialData.Shared {
-  public enum SampleType {
-    Quote, Bar,
-  }
+    public enum SampleType {
+        Quote, Bar,
+    }
 }
