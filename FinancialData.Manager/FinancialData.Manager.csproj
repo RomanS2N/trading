@@ -57,6 +57,10 @@
       <Project>{8FB9707D-8797-482B-A6DC-FE5D964EC555}</Project>
       <Name>FinancialData.Shared</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Storage.Shared\Storage.Shared.csproj">
+      <Project>{61f96de7-d15e-4fd2-b3ba-83aa2b7950bc}</Project>
+      <Name>Storage.Shared</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TradingConfiguration.Shared\TradingConfiguration.Shared.csproj">
       <Project>{5F12D93A-7C84-400E-9D2B-84D1D7D2C5C4}</Project>
       <Name>TradingConfiguration.Shared</Name>
