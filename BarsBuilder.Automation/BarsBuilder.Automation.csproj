@@ -52,6 +52,10 @@
       <Project>{30F5D281-E2D3-4C43-92AB-C167F0ED08D0}</Project>
       <Name>BarsBuilder</Name>
     </ProjectReference>
+    <ProjectReference Include="..\FinancialData.Shared\FinancialData.Shared.csproj">
+      <Project>{8fb9707d-8797-482b-a6dc-fe5d964ec555}</Project>
+      <Name>FinancialData.Shared</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FinancialSeriesUtils\FinancialSeriesUtils.csproj">
       <Project>{861c6542-4ec4-4f29-aff4-30fe811a9502}</Project>
       <Name>FinancialSeriesUtils</Name>

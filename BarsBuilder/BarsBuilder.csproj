@@ -44,13 +44,17 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Bars.Shared\Bars.Shared.csproj">
-      <Project>{6980b5c3-aa2a-4f8d-ba16-7c55ac601b8d}</Project>
-      <Name>Bars.Shared</Name>
-    </ProjectReference>
     <ProjectReference Include="..\BarsBuilder.Shared\BarsBuilder.Shared.csproj">
       <Project>{A44BBCD4-771B-4C33-88F8-ACE2BECE6D5F}</Project>
       <Name>BarsBuilder.Shared</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FinancialData.Shared\FinancialData.Shared.csproj">
+      <Project>{8fb9707d-8797-482b-a6dc-fe5d964ec555}</Project>
+      <Name>FinancialData.Shared</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FinancialData\FinancialData.csproj">
+      <Project>{10d2e9d9-b617-4612-b78b-182510bd0f49}</Project>
+      <Name>FinancialData</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

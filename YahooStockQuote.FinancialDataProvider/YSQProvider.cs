@@ -44,18 +44,10 @@ namespace YahooStockQuote.FinancialDataProvider {
       // Date,        Open,   High,   Low,    Close,  Volume,   Adj Close
       // 2014-07-01,  41.86,  42.15,  41.69,  41.87,  26917000, 41.87
       var parts = text.Split(new char[] { ',' });
-      return new Bar {
-        Asset = asset,
-        Source = source,
-        Period = period,
-        DateTime = DateTime.ParseExact(parts[0], "yyyy-MM-dd", CultureInfo.InvariantCulture),
-        Open = decimal.Parse(parts[1]),
-        High = decimal.Parse(parts[2]),
-        Low = decimal.Parse(parts[3]),
-        Close = decimal.Parse(parts[4]),
-        Volume = long.Parse(parts[5]),
-        AdjClose = decimal.Parse(parts[6]),
-      };
+      return new Bar(
+        asset, source, period, DateTime.ParseExact(parts[0], "yyyy-MM-dd", CultureInfo.InvariantCulture),
+        decimal.Parse(parts[1]), decimal.Parse(parts[2]), decimal.Parse(parts[3]), decimal.Parse(parts[4]),
+        long.Parse(parts[5]), decimal.Parse(parts[6]));
     }
     public ISamplePackage GetHistory(Asset asset, DateTime start, DateTime end, IProvisionContext provisionContext) {
       List<string> data = YSQReader.GetHistoricalPrices(GetSymbolForAsset(asset), start, end);

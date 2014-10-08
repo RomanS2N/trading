@@ -31,6 +31,10 @@ namespace Indices.Research {
       var samplePackage = new YSQProvider().GetHistory(new Asset { Name = symbol, Type = AssetType.Index }, begin, end, null);
       var barPackage = (IBarPackage)samplePackage;
       var samples = barPackage.Samples;
+      samples.ForEach(x => Console.WriteLine(x));
+
+      Console.WriteLine("Press a key to exit...");
+      Console.ReadKey(true);
     }
   }
 }

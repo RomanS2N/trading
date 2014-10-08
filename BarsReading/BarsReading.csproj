@@ -44,9 +44,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Bars.Shared\Bars.Shared.csproj">
-      <Project>{6980b5c3-aa2a-4f8d-ba16-7c55ac601b8d}</Project>
-      <Name>Bars.Shared</Name>
+    <ProjectReference Include="..\FinancialData\FinancialData.csproj">
+      <Project>{10d2e9d9-b617-4612-b78b-182510bd0f49}</Project>
+      <Name>FinancialData</Name>
     </ProjectReference>
     <ProjectReference Include="..\FinancialSeries.Shared\FinancialSeries.Shared.csproj">
       <Project>{af1083a0-9249-4cce-a6a0-1b0b9b2475aa}</Project>
