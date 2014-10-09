@@ -51,6 +51,7 @@
     <Compile Include="IQuotePackage.cs" />
     <Compile Include="ISample.cs" />
     <Compile Include="ISamplePackage.cs" />
+    <Compile Include="IInstantValue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SampleType.cs" />
   </ItemGroup>

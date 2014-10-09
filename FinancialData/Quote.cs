@@ -17,36 +17,38 @@
 using FinancialData.Shared;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TimeUtils;
 
 namespace FinancialData {
-	public class Quote : IQuote {
-		public Asset Asset { get; set; }
-		public IDataSource Source { get; set; }
-		public DateTime DateTime { get; set; }
-		public decimal Ask { get; set; }
-		public int AskSize { get; set; }
-		public decimal Bid { get; set; }
-		public int BidSize { get; set; }
+  public class Quote : IQuote {
+    private static CultureInfo _culture = CultureInfo.GetCultureInfo("en-US");
+    public Asset Asset { get; set; }
+    public IDataSource Source { get; set; }
+    public DateTime DateTime { get; set; }
+    public decimal Ask { get; set; }
+    public int AskSize { get; set; }
+    public decimal Bid { get; set; }
+    public int BidSize { get; set; }
 
-		public SampleType SampleType {
-			get { return SampleType.Quote; }
-		}
+    public SampleType SampleType {
+      get { return SampleType.Quote; }
+    }
 
-		public static Quote From3PartsString(string line, Shared.Asset asset, IDataSource source) {
-			var parts = line.Split(new char[] { ',' });
-			return new Quote {
-				Asset = asset,
-				Source = source,
-				DateTime = Instant.FromMillisAfterEpoch(long.Parse(parts[0])),
-				Ask = source.ConvertPrice(decimal.Parse(parts[1])),
-				AskSize = 0,
-				Bid = source.ConvertPrice(decimal.Parse(parts[2])),
-				BidSize = 0,
-			};
-		}
-	}
+    public static Quote From3PartsString(string line, Shared.Asset asset, IDataSource source) {
+      var parts = line.Split(new char[] { ',' });
+      return new Quote {
+        Asset = asset,
+        Source = source,
+        DateTime = Instant.FromMillisAfterEpoch(long.Parse(parts[0])),
+        Ask = source.ConvertPrice(decimal.Parse(parts[1], _culture)),
+        AskSize = 0,
+        Bid = source.ConvertPrice(decimal.Parse(parts[2], _culture)),
+        BidSize = 0,
+      };
+    }
+  }
 }

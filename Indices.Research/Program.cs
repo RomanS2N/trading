@@ -21,6 +21,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using YahooStockQuote.FinancialDataProvider;
+using TALibIndicators;
 
 namespace Indices.Research {
   class Program {
@@ -30,8 +31,20 @@ namespace Indices.Research {
       var end = new DateTime(2015, 1, 1);
       var samplePackage = new YSQProvider().GetHistory(new Asset { Name = symbol, Type = AssetType.Index }, begin, end, null);
       var barPackage = (IBarPackage)samplePackage;
-      var samples = barPackage.Samples;
-      samples.ForEach(x => Console.WriteLine(x));
+      var bars = barPackage.Samples;
+      //bars.ForEach(x => Console.WriteLine(x));
+
+      IBar lastBar = null;
+      List<double> deltas = new List<double>();
+      foreach (var bar in bars) {
+        if (lastBar != null) {
+          var delta = lastBar.Close - bar.Open;
+          deltas.Add((double)delta);
+        }
+        lastBar = bar;
+      }
+
+      var smoothDeltas = deltas.ToArray().SMA(6);
 
       Console.WriteLine("Press a key to exit...");
       Console.ReadKey(true);

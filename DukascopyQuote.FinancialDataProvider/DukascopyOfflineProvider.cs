@@ -25,6 +25,8 @@ using System.Globalization;
 namespace DukascopyQuote.FinancialDataProvider {
   public class DukascopyOfflineProvider : IFinancialDataProvider {
 
+    private static CultureInfo _culture = CultureInfo.GetCultureInfo("en-US");
+
     #region Singleton
 
     private static DukascopyOfflineProvider _instance;
@@ -55,7 +57,7 @@ namespace DukascopyQuote.FinancialDataProvider {
       // 01.01.2014 00:00:00.000,1.06180,1.06180,1.06180,1.06180,0.00
       var parts = text.Split(new char[] { ',' });
       return new Bar(asset, source, timeFrame, DateTime.ParseExact(parts[0], "dd.MM.yyyy HH:mm:ss.fff", CultureInfo.InvariantCulture),
-        decimal.Parse(parts[1]), decimal.Parse(parts[2]), decimal.Parse(parts[3]), decimal.Parse(parts[4]), (long)decimal.Parse(parts[5]));
+        decimal.Parse(parts[1], _culture), decimal.Parse(parts[2], _culture), decimal.Parse(parts[3], _culture), decimal.Parse(parts[4], _culture), (long)decimal.Parse(parts[5], _culture));
     }
     public ISamplePackage GetHistory(Asset asset, DateTime start, DateTime end, IProvisionContext provisionContext) {
       List<string> data = DukascopyOfflineReader.GetHistoricalPrices(provisionContext.Source);

@@ -26,6 +26,7 @@ using TimeUtils;
 
 namespace YahooStockQuote.FinancialDataProvider {
   public class YSQProvider : IFinancialDataProvider {
+    private static CultureInfo _culture = CultureInfo.GetCultureInfo("en-US");
     private string GetSymbolForAsset(Asset asset) {
       switch (asset.Type) {
         case AssetType.Stock:
@@ -38,7 +39,7 @@ namespace YahooStockQuote.FinancialDataProvider {
     }
     public ISample GetPrice(Asset asset) {
       var price = YSQReader.GetPrice(GetSymbolForAsset(asset));
-      return new Quote() { Asset = asset, Source = new YQSDataSource(), DateTime = Instant.Now, Ask = decimal.Parse(price) };
+      return new Quote() { Asset = asset, Source = new YQSDataSource(), DateTime = Instant.Now, Ask = decimal.Parse(price, _culture) };
     }
     private Bar BuildBar(Asset asset, IDataSource source, TimeSpan period, string text) {
       // Date,        Open,   High,   Low,    Close,  Volume,   Adj Close
@@ -46,8 +47,8 @@ namespace YahooStockQuote.FinancialDataProvider {
       var parts = text.Split(new char[] { ',' });
       return new Bar(
         asset, source, period, DateTime.ParseExact(parts[0], "yyyy-MM-dd", CultureInfo.InvariantCulture),
-        decimal.Parse(parts[1]), decimal.Parse(parts[2]), decimal.Parse(parts[3]), decimal.Parse(parts[4]),
-        long.Parse(parts[5]), decimal.Parse(parts[6]));
+        decimal.Parse(parts[1], _culture), decimal.Parse(parts[2], _culture), decimal.Parse(parts[3], _culture), decimal.Parse(parts[4], _culture),
+        long.Parse(parts[5]), decimal.Parse(parts[6], _culture));
     }
     public ISamplePackage GetHistory(Asset asset, DateTime start, DateTime end, IProvisionContext provisionContext) {
       List<string> data = YSQReader.GetHistoricalPrices(GetSymbolForAsset(asset), start, end);
