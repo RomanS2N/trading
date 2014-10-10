@@ -48,9 +48,25 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\FinancialData.Shared\FinancialData.Shared.csproj">
+      <Project>{8fb9707d-8797-482b-a6dc-fe5d964ec555}</Project>
+      <Name>FinancialData.Shared</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NeuralNetwork\NeuralNetwork.csproj">
       <Project>{f45ccb47-1df1-482a-b967-6c8397cd727e}</Project>
       <Name>NeuralNetwork</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TALibIndicators\TALibIndicators.csproj">
+      <Project>{1ac9d8ef-72d8-41de-aff0-cc7c104c3236}</Project>
+      <Name>TALibIndicators</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\YahooStockQuote.FinancialDataProvider\YahooStockQuote.FinancialDataProvider.csproj">
+      <Project>{4545372e-fafa-426f-8427-ab10f6115d1f}</Project>
+      <Name>YahooStockQuote.FinancialDataProvider</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\YahooStockQuote\YahooStockQuote.csproj">
+      <Project>{8fd020e3-5e1f-4aa4-9e79-196a120396c2}</Project>
+      <Name>YahooStockQuote</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

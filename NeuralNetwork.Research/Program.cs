@@ -40,17 +40,22 @@
 // You can use this code however you wish subject to the usual disclaimers
 // (use at your own risk, etc.)
 
+using FinancialData.Shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using YahooStockQuote.FinancialDataProvider;
+using TALibIndicators;
 
 namespace NeuralNetwork.Research {
   class Program {
-    static void Main(string[] args) {
+
+    static void TrainWithSampleData() {
 
       List<double[]> data = new List<double[]>();
+
       data.Add(new double[] { 5.1, 3.5, 1.4, 0.2, 0, 0, 1 });
       data.Add(new double[] { 4.9, 3.0, 1.4, 0.2, 0, 0, 1 });
       data.Add(new double[] { 4.7, 3.2, 1.3, 0.2, 0, 0, 1 });
@@ -217,6 +222,53 @@ namespace NeuralNetwork.Research {
       data.Add(new double[] { 5.9, 3.0, 5.1, 1.8, 1, 0, 0 });
 
       Trainer.Execute(data);
+    }
+
+    static void TrainWithIndexData() {
+      List<double[]> data = new List<double[]>();
+
+      var symbol = YSQSymbol.YSQIndex.SNP;
+      var begin = new DateTime(2000, 1, 1);
+      var end = new DateTime(2015, 1, 1);
+      var samplePackage = new YSQProvider().GetHistory(new Asset { Name = symbol, Type = AssetType.Index }, begin, end, null);
+      var barPackage = (IBarPackage)samplePackage;
+      var samples = barPackage.Samples;
+
+      //samples.ForEach(x => Console.WriteLine(x));
+
+      var openValues = samples.Select(x => (double)x.Open).ToArray();
+      var indicator1 = openValues.RSI(15);
+      var indicator2 = openValues.RSI(6);
+      var indicator3 = openValues.SMA(24);
+      var indicator4 = openValues.SMA(10);
+
+      var stay = new double[] { 1, 0, 0 };
+      var goLong = new double[] { 0, 1, 0 };
+      var goShort = new double[] { 0, 0, 1 };
+
+      var deltaPrices = samples.Select(x => x.Close - x.Open).ToList();
+      var action = deltaPrices.Select(deltaPrice => {
+        var abs = Math.Abs(deltaPrice);
+        if (abs < 20) return stay;
+        if (deltaPrice < 0) return goShort;
+        return goLong;
+      }).ToList();
+
+      Console.WriteLine("Times to stay: {0}", action.Count(x => x == stay));
+      Console.WriteLine("Times to go long: {0}", action.Count(x => x == goLong));
+      Console.WriteLine("Times to go short: {0}", action.Count(x => x == goShort));
+
+      int samplesCount = samples.Count;
+
+      for (int i = 0; i < samplesCount; i++) {
+        var entry = new double[] { indicator1[i], indicator2[i], indicator3[i], indicator4[i], action[i][0], action[i][1], action[i][2] };
+        data.Add(entry);
+      }
+
+      Trainer.Execute(data);
+    }
+    static void Main(string[] args) {
+      TrainWithIndexData();
     }
   }
 }

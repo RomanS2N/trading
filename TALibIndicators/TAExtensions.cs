@@ -59,6 +59,9 @@ namespace TALibIndicators {
     public static double[] SMA(this IEnumerable<double> series, int period) {
       return series.ToArray().RunTA7(TicTacTec.TA.Library.Core.Sma, period);
     }
+    public static double[] RSI(this IEnumerable<double> series, int period) {
+      return series.ToArray().RunTA7(TicTacTec.TA.Library.Core.Rsi, period);
+    }
     public static Tuple<double[], double[], double[]> Bbands(this IEnumerable<double> series, int period, double devUp, double devDn, Core.MAType maType) {
       return series.ToArray().RunTA12(TicTacTec.TA.Library.Core.Bbands, period, devUp, devDn, maType);
     }
