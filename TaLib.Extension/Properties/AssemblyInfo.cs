@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("TALibIndicators.UnitTest")]
+[assembly: AssemblyTitle("TaLib.Extension")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
-[assembly: AssemblyProduct("TALibIndicators.UnitTest")]
+[assembly: AssemblyProduct("TaLib.Extension")]
 [assembly: AssemblyCopyright("Copyright © Microsoft 2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("5f256aa7-6907-4782-97e3-e298ae0db25e")]
+[assembly: Guid("a9749a4b-5ce6-4cd0-a18a-462393f49647")]
 
 // Version information for an assembly consists of the following four values:
 //

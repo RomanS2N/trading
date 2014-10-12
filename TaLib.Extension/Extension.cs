@@ -14,14 +14,17 @@
    limitations under the License.
 */
 
+using FinancialData;
+using FinancialData.Shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using TicTacTec.TA.Library;
 
-namespace TALibIndicators {
-  public static class TAExtensions {
+namespace TaLib.Extension {
+  public static class Extension {
     delegate TicTacTec.TA.Library.Core.RetCode TA7(int startIdx, int endIdx, double[] inReal, int optInTimePeriod, out int outBegIdx, out int outNbElement, double[] outReal);
     static double[] RunTA7(this double[] series, TA7 handler, int period) {
       int startIdx = 0;
@@ -56,12 +59,139 @@ namespace TALibIndicators {
     public static double[] LinearRegressionSlope(this double[] series, int period = 0) {
       return series.RunTA7(TicTacTec.TA.Library.Core.LinearRegSlope, period);
     }
+
+    #region SMA
+
     public static double[] SMA(this IEnumerable<double> series, int period) {
       return series.ToArray().RunTA7(TicTacTec.TA.Library.Core.Sma, period);
     }
+
+    public static List<IInstantValue<double>> SMA(this IEnumerable<IQuote> series, int period) {
+      var seriesArray = series.ToArray();
+      var values = seriesArray
+        .Select(x => (double)x.Ask)
+        .ToArray()
+        .RunTA7(TicTacTec.TA.Library.Core.Sma, period)
+        .Select(x => new InstantValue<double>(x) as IInstantValue<double>)
+        .ToList();
+      int count = values.Count;
+      if (count != series.Count()) {
+        throw new Exception("Wrong values qty.");
+      }
+      for (int i = 0; i < count; i++) {
+        ((InstantValue<double>)values[i]).DateTime = seriesArray[i].DateTime;
+      }
+      return values;
+    }
+
+    public static List<IInstantValue<double>> SMA(this IEnumerable<IBar> series, int period) {
+      var seriesArray = series.ToArray();
+      var values = seriesArray
+        .Select(x => (double)x.Close)
+        .ToArray()
+        .RunTA7(TicTacTec.TA.Library.Core.Sma, period)
+        .Select(x => new InstantValue<double>(x) as IInstantValue<double>)
+        .ToList();
+      int count = values.Count;
+      if (count != series.Count()) {
+        throw new Exception("Wrong values qty.");
+      }
+      for (int i = 0; i < count; i++) {
+        ((InstantValue<double>)values[i]).DateTime = seriesArray[i].DateTime;
+      }
+      return values;
+    }
+
+    #endregion
+
+    #region EMA
+
+    public static double[] EMA(this IEnumerable<double> series, int period) {
+      return series.ToArray().RunTA7(TicTacTec.TA.Library.Core.Ema, period);
+    }
+
+    public static List<IInstantValue<double>> EMA(this IEnumerable<IQuote> series, int period) {
+      var seriesArray = series.ToArray();
+      var values = seriesArray
+        .Select(x => (double)x.Ask)
+        .ToArray()
+        .RunTA7(TicTacTec.TA.Library.Core.Ema, period)
+        .Select(x => new InstantValue<double>(x) as IInstantValue<double>)
+        .ToList();
+      int count = values.Count;
+      if (count != series.Count()) {
+        throw new Exception("Wrong values qty.");
+      }
+      for (int i = 0; i < count; i++) {
+        ((InstantValue<double>)values[i]).DateTime = seriesArray[i].DateTime;
+      }
+      return values;
+    }
+
+    public static List<IInstantValue<double>> EMA(this IEnumerable<IBar> series, int period) {
+      var seriesArray = series.ToArray();
+      var values = seriesArray
+        .Select(x => (double)x.Close)
+        .ToArray()
+        .RunTA7(TicTacTec.TA.Library.Core.Ema, period)
+        .Select(x => new InstantValue<double>(x) as IInstantValue<double>)
+        .ToList();
+      int count = values.Count;
+      if (count != series.Count()) {
+        throw new Exception("Wrong values qty.");
+      }
+      for (int i = 0; i < count; i++) {
+        ((InstantValue<double>)values[i]).DateTime = seriesArray[i].DateTime;
+      }
+      return values;
+    }
+
+    #endregion
+
+    #region RSI
+
     public static double[] RSI(this IEnumerable<double> series, int period) {
       return series.ToArray().RunTA7(TicTacTec.TA.Library.Core.Rsi, period);
     }
+
+    public static List<IInstantValue<double>> RSI(this IEnumerable<IQuote> series, int period) {
+      var seriesArray = series.ToArray();
+      var values = seriesArray
+        .Select(x => (double)x.Ask)
+        .ToArray()
+        .RunTA7(TicTacTec.TA.Library.Core.Rsi, period)
+        .Select(x => new InstantValue<double>(x) as IInstantValue<double>)
+        .ToList();
+      int count = values.Count;
+      if (count != series.Count()) {
+        throw new Exception("Wrong values qty.");
+      }
+      for (int i = 0; i < count; i++) {
+        ((InstantValue<double>)values[i]).DateTime = seriesArray[i].DateTime;
+      }
+      return values;
+    }
+
+    public static List<IInstantValue<double>> RSI(this IEnumerable<IBar> series, int period) {
+      var seriesArray = series.ToArray();
+      var values = seriesArray
+        .Select(x => (double)x.Close)
+        .ToArray()
+        .RunTA7(TicTacTec.TA.Library.Core.Rsi, period)
+        .Select(x => new InstantValue<double>(x) as IInstantValue<double>)
+        .ToList();
+      int count = values.Count;
+      if (count != series.Count()) {
+        throw new Exception("Wrong values qty.");
+      }
+      for (int i = 0; i < count; i++) {
+        ((InstantValue<double>)values[i]).DateTime = seriesArray[i].DateTime;
+      }
+      return values;
+    }
+
+    #endregion
+
     public static Tuple<double[], double[], double[]> Bbands(this IEnumerable<double> series, int period, double devUp, double devDn, Core.MAType maType) {
       return series.ToArray().RunTA12(TicTacTec.TA.Library.Core.Bbands, period, devUp, devDn, maType);
     }

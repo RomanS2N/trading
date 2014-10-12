@@ -21,7 +21,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using YahooStockQuote.FinancialDataProvider;
-using TALibIndicators;
+using TaLib.Extension;
 
 namespace Indices.Research {
   class Program {

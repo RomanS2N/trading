@@ -14,6 +14,10 @@
    limitations under the License.
 */
 
+using BarsBuilder;
+using BarsBuilder.Shared;
+using FinancialData;
+using FinancialData.Shared;
 using FinancialSeries.Shared;
 using System;
 using System.Collections.Generic;
@@ -144,6 +148,21 @@ namespace BarsReading {
       dateTimes = ldateTimes.ToArray();
       prices = lprices.ToArray();
       return prices.Length;
+    }
+
+    public List<IBar> ReadAll() {
+      IBarsCreator creator = new BarsCreator(null, null, TimeSpan.FromMinutes(1), null);
+      DateTime[] dateTimes;
+      double[] prices;
+      ReadAll(out dateTimes, out prices);
+      int count = prices.Count();
+      if (count != dateTimes.Count()) {
+        throw new Exception("Wrong samples qty");
+      }
+      for (int i = 0; i < count; i++) {
+        creator.AddQuote(dateTimes[i], (decimal)prices[i]);
+      }
+      return creator.GetBars();
     }
   }
 }

@@ -14,6 +14,7 @@
    limitations under the License.
 */
 
+using FinancialData.Shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,5 +31,7 @@ namespace BarsBuilder.Shared {
     string StoragePath { get; }
 
     void Finish();
+
+    List<IBar> GetBars();
   }
 }

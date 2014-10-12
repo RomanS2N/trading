@@ -3,12 +3,12 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{FF1BAE30-0544-46CB-AA1B-D0C07EB8F31C}</ProjectGuid>
+    <ProjectGuid>{FCE22F0C-8E45-4372-BC7C-E89223B7619E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TALibIndicators.UnitTest</RootNamespace>
-    <AssemblyName>TALibIndicators.UnitTest</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <RootNamespace>Simulation.UnitTest</RootNamespace>
+    <AssemblyName>Simulation.UnitTest</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -36,13 +36,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.Core">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="TA-Lib-Core, Version=1.0.2813.38892, Culture=neutral, PublicKeyToken=fdb2a6b268f56aa5, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Dependencies\TA-Lib-Core.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -59,28 +52,6 @@
   <ItemGroup>
     <Compile Include="UnitTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\BarsReading\BarsReading.csproj">
-      <Project>{b2d14a97-8849-488b-baf4-f28ce8f72fe1}</Project>
-      <Name>BarsReading</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\FinancialSeries.Shared\FinancialSeries.Shared.csproj">
-      <Project>{af1083a0-9249-4cce-a6a0-1b0b9b2475aa}</Project>
-      <Name>FinancialSeries.Shared</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\FinancialSeriesUtils\FinancialSeriesUtils.csproj">
-      <Project>{861c6542-4ec4-4f29-aff4-30fe811a9502}</Project>
-      <Name>FinancialSeriesUtils</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SeriesReading\SeriesReading.csproj">
-      <Project>{37e1ca69-6c8f-4af1-b528-eb92f985af3d}</Project>
-      <Name>SeriesReading</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\TALibIndicators\TALibIndicators.csproj">
-      <Project>{1ac9d8ef-72d8-41de-aff0-cc7c104c3236}</Project>
-      <Name>TALibIndicators</Name>
-    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

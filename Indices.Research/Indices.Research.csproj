@@ -52,9 +52,9 @@
       <Project>{8fb9707d-8797-482b-a6dc-fe5d964ec555}</Project>
       <Name>FinancialData.Shared</Name>
     </ProjectReference>
-    <ProjectReference Include="..\TALibIndicators\TALibIndicators.csproj">
-      <Project>{1ac9d8ef-72d8-41de-aff0-cc7c104c3236}</Project>
-      <Name>TALibIndicators</Name>
+    <ProjectReference Include="..\TaLib.Extension\TaLib.Extension.csproj">
+      <Project>{d0d894f7-40ec-4f9b-bead-2adf7e2a9931}</Project>
+      <Name>TaLib.Extension</Name>
     </ProjectReference>
     <ProjectReference Include="..\YahooStockQuote.FinancialDataProvider\YahooStockQuote.FinancialDataProvider.csproj">
       <Project>{4545372e-fafa-426f-8427-ab10f6115d1f}</Project>

@@ -40,8 +40,8 @@ namespace BarsBuilder {
       TimeFrame = timeFrame;
       _timeFrameTicks = TimeFrame.Ticks;
       StoragePath = storagePath;
-      if (storagePath == null)
-        throw new Exception("storagePath can't be null.");
+      //if (storagePath == null)
+      //  throw new Exception("storagePath can't be null.");
     }
     private void AddBar(Bar newBar) {
 #if _VERBOSE
@@ -56,19 +56,21 @@ namespace BarsBuilder {
     }
 
     private void BackupBars(int barsToRemove, bool removeAll = false) {
-      if (BarsCount > barsToRemove || removeAll) {
-        CreateFile();
-        Console.WriteLine("Saving {0} bars to {1}", barsToRemove, StoragePath);
-        for (int i = 0; i < barsToRemove; i++) {
-          _writer.Write(_bars[i].Close/*.GetBytes()*/);
-        }
-        _bars.RemoveRange(0, barsToRemove);
-        BarsCount -= barsToRemove;
-        StoredBars += barsToRemove;
+      if (StoragePath != null) {
+        if (BarsCount > barsToRemove || removeAll) {
+          CreateFile();
+          Console.WriteLine("Saving {0} bars to {1}", barsToRemove, StoragePath);
+          for (int i = 0; i < barsToRemove; i++) {
+            _writer.Write(_bars[i].Close/*.GetBytes()*/);
+          }
+          _bars.RemoveRange(0, barsToRemove);
+          BarsCount -= barsToRemove;
+          StoredBars += barsToRemove;
 
-        if (removeAll) {
-          _writer.Flush();
-          _writer.Close();
+          if (removeAll) {
+            _writer.Flush();
+            _writer.Close();
+          }
         }
       }
     }
@@ -130,15 +132,17 @@ namespace BarsBuilder {
     private long _firstQuoteBarIndex;
 
     private void CreateFile() {
-      if (FilePath == null) {
-        if (BarsCount <= 0)
-          throw new Exception("Unable to create the filePath based on first bar information.");
-        Bar firstBar = _bars[0];
-        _firstQuoteBarIndex = firstBar.DateTime.Ticks / _timeFrameTicks;
-        FilePath = string.Format(@"{0}\BARS_TF_{1}__IX_{2}.bin", StoragePath, _timeFrameTicks, _firstQuoteBarIndex);
-        if (File.Exists(FilePath)) File.Delete(FilePath);
-        if (_writer != null) _writer.Close();
-        _writer = new BinaryWriter(File.OpenWrite(FilePath));
+      if (StoragePath != null) {
+        if (FilePath == null) {
+          if (BarsCount <= 0)
+            throw new Exception("Unable to create the filePath based on first bar information.");
+          Bar firstBar = _bars[0];
+          _firstQuoteBarIndex = firstBar.DateTime.Ticks / _timeFrameTicks;
+          FilePath = string.Format(@"{0}\BARS_TF_{1}__IX_{2}.bin", StoragePath, _timeFrameTicks, _firstQuoteBarIndex);
+          if (File.Exists(FilePath)) File.Delete(FilePath);
+          if (_writer != null) _writer.Close();
+          _writer = new BinaryWriter(File.OpenWrite(FilePath));
+        }
       }
     }
 
@@ -154,6 +158,10 @@ namespace BarsBuilder {
         if (_lastBar.BarIndex != theoreticalLastBarIndex)
           throw new Exception("Inconsistent bars creation.");
       }
+    }
+
+    public List<IBar> GetBars() {
+      return this._bars.Cast<IBar>().ToList();
     }
   }
 }
