@@ -42,6 +42,16 @@
     <Compile Include="SimulationRunner.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FinancialData.Shared\FinancialData.Shared.csproj">
+      <Project>{8fb9707d-8797-482b-a6dc-fe5d964ec555}</Project>
+      <Name>FinancialData.Shared</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Simulation.Shared\Simulation.Shared.csproj">
+      <Project>{2656ea8f-d554-404e-9a2c-753ecc754acc}</Project>
+      <Name>Simulation.Shared</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

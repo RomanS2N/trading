@@ -88,17 +88,17 @@ namespace NeuralNetwork {
     }
 
     public static void Execute(List<double[]> data) {
-      Console.WriteLine("\nBegin Build 2013 neural network demo");
-      Console.WriteLine("\nData is the famous Iris flower set.");
-      Console.WriteLine("Data is sepal length, sepal width, petal length, petal width -> iris species");
-      Console.WriteLine("Iris setosa = 0 0 1, Iris versicolor = 0 1 0, Iris virginica = 1 0 0 ");
-      Console.WriteLine("The goal is to predict species from sepal length, width, petal length, width\n");
+      //Console.WriteLine("\nBegin Build 2013 neural network demo");
+      //Console.WriteLine("\nData is the famous Iris flower set.");
+      //Console.WriteLine("Data is sepal length, sepal width, petal length, petal width -> iris species");
+      //Console.WriteLine("Iris setosa = 0 0 1, Iris versicolor = 0 1 0, Iris virginica = 1 0 0 ");
+      //Console.WriteLine("The goal is to predict species from sepal length, width, petal length, width\n");
 
-      Console.WriteLine("Raw data resembles:\n");
-      Console.WriteLine(" 5.1, 3.5, 1.4, 0.2, Iris setosa");
-      Console.WriteLine(" 7.0, 3.2, 4.7, 1.4, Iris versicolor");
-      Console.WriteLine(" 6.3, 3.3, 6.0, 2.5, Iris virginica");
-      Console.WriteLine(" ......\n");
+      //Console.WriteLine("Raw data resembles:\n");
+      //Console.WriteLine(" 5.1, 3.5, 1.4, 0.2, Iris setosa");
+      //Console.WriteLine(" 7.0, 3.2, 4.7, 1.4, Iris versicolor");
+      //Console.WriteLine(" 6.3, 3.3, 6.0, 2.5, Iris virginica");
+      //Console.WriteLine(" ......\n");
 
       var allData = data.ToArray();
 
