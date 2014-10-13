@@ -7,6 +7,6 @@ using System.Threading.Tasks;
 
 namespace Simulation.Shared {
   public interface ISimulation {
-    void OnBar(IBar globalFinancialDataSharedIBar, Dictionary<string, IInstantValue<double>> seriesValues);
+    void OnBar(IBar bar, Dictionary<string, IInstantValue<double>> seriesValues);
   }
 }
