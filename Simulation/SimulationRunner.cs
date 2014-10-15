@@ -32,7 +32,7 @@ namespace Simulation {
       int count = _bars.Count;
       for (int i = 0; i < count; i++) {
         var seriesValues = GetSeriesValues(i);
-        _simulation.OnBar(_bars[i], seriesValues);
+        _simulation.OnBar(new BarContext(_bars[i], seriesValues));
       }
     }
   }

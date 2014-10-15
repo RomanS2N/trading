@@ -39,7 +39,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IBarContext.cs" />
+    <Compile Include="IPosition.cs" />
     <Compile Include="ISimulation.cs" />
+    <Compile Include="PositionSide.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
