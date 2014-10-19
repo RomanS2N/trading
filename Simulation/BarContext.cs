@@ -19,11 +19,5 @@ namespace Simulation {
     }
     public IBar Bar { get; private set; }
     public Dictionary<string, IInstantValue<double>> SeriesValues { get; private set; }
-    public List<IPosition> Positions { get; private set; }
-    public List<IPosition> LongPositions { get { return Positions.Where(x => x.Side == PositionSide.Long).ToList(); } }
-    public List<IPosition> ShortPositions { get { return Positions.Where(x => x.Side == PositionSide.Short).ToList(); } }
-    public void CreatePosition(PositionSide positionSide, decimal price, int size) {
-      Positions.Add(new Position(positionSide, price, size));
-    }
   }
 }

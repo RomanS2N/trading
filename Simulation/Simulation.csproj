@@ -40,6 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BarContext.cs" />
+    <Compile Include="BaseSimulation.cs" />
     <Compile Include="Position.cs" />
     <Compile Include="SimulationRunner.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
