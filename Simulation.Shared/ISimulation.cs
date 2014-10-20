@@ -13,5 +13,6 @@ namespace Simulation.Shared {
     void CreatePosition(PositionSide positionSide, decimal price, int size);
     void ClosePosition(IPosition position);
     void OnBar(IBarContext context);
+    string GetReport();
   }
 }

@@ -5,6 +5,7 @@ using FinancialData.Shared;
 using System.Collections.Generic;
 using TaLib.Extension;
 using Simulation.Shared;
+using System.Diagnostics;
 
 namespace Simulation.UnitTest {
   [TestClass]
@@ -22,9 +23,10 @@ namespace Simulation.UnitTest {
       // simulation
       var simulation = new TestSimulation();
       SimulationRunner simulationRunner = new SimulationRunner(bars, simulation);
-      simulationRunner.AddSerie("EMA9", bars.EMA(9));
-      simulationRunner.AddSerie("EMA13", bars.EMA(13));
+      simulationRunner.AddSerie("EMA10", bars.EMA(10));
+      simulationRunner.AddSerie("EMA20", bars.EMA(20));
       simulationRunner.Execute();
+      Debug.WriteLine(simulationRunner.GetReport());
     }
   }
 }
