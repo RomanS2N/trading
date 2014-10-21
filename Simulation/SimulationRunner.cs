@@ -35,8 +35,5 @@ namespace Simulation {
         _simulation.OnBar(new BarContext(_bars[i], seriesValues));
       }
     }
-    public string GetReport() {
-      return _simulation.GetReport();
-    }
   }
 }

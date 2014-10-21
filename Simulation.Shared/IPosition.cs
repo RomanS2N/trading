@@ -7,5 +7,6 @@ namespace Simulation.Shared {
   public interface IPosition {
     PositionSide Side { get; }
     void Close(decimal price);
+    decimal Earnings { get; }
   }
 }

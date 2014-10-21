@@ -23,10 +23,10 @@ namespace Simulation.UnitTest {
       // simulation
       var simulation = new TestSimulation();
       SimulationRunner simulationRunner = new SimulationRunner(bars, simulation);
-      simulationRunner.AddSerie("EMA10", bars.EMA(10));
-      simulationRunner.AddSerie("EMA20", bars.EMA(20));
+      simulationRunner.AddSerie("EMA_SMALL", bars.EMA(10));
+      simulationRunner.AddSerie("EMA_BIG", bars.EMA(20));
       simulationRunner.Execute();
-      Debug.WriteLine(simulationRunner.GetReport());
+      Debug.WriteLine(simulation.GetReport());
     }
   }
 }
