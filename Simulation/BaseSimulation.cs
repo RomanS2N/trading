@@ -44,6 +44,7 @@ namespace Simulation {
       var shortClosedPositions = _closedPositions.Where(x => x.Side == PositionSide.Short).ToList();
 
       stringBuilder.AppendLine("--------------------------------------------------------------------------------");
+      stringBuilder.AppendLine(SimulationInfo);
       stringBuilder.AppendLine(string.Format("Trades count: {0}", _closedPositions.Count));
       stringBuilder.AppendLine(string.Format("Long trades count: {0}", longClosedPositions.Count));
       stringBuilder.AppendLine(string.Format("Long trades balance: {0}", longClosedPositions.Sum(x => x.Earnings)));
@@ -57,5 +58,6 @@ namespace Simulation {
         return _closedPositions.Sum(x => x.Earnings);
       }
     }
+    public string SimulationInfo { get; set; }
   }
 }

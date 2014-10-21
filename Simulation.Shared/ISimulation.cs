@@ -15,5 +15,6 @@ namespace Simulation.Shared {
     void OnBar(IBarContext context);
     string GetReport();
     decimal Earnings { get; }
+    string SimulationInfo { get; set; }
   }
 }

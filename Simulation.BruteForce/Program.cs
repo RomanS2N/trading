@@ -21,7 +21,8 @@ namespace Simulation.BruteForce {
       ISimulation bestSimulation = default(ISimulation);
       for (int small = 10; small < 20; small += 1) {
         for (int big = 30; big < 80; big += 2) {
-          var simulation = new TestSimulation();
+          var simulation = SmaSimulation.CreateLongOnly(100);
+          simulation.SimulationInfo = string.Format("EMA_SMALL: {0}, EMA_BIG: {1}", small, big);
           SimulationRunner simulationRunner = new SimulationRunner(bars, simulation);
           simulationRunner.AddSerie("EMA_SMALL", bars.EMA(small));
           simulationRunner.AddSerie("EMA_BIG", bars.EMA(big));
@@ -32,9 +33,7 @@ namespace Simulation.BruteForce {
           }
         }
       }
-
       Console.WriteLine(bestSimulation.GetReport());
-
       Console.ReadKey(true);
     }
   }
