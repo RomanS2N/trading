@@ -49,6 +49,10 @@
     <Compile Include="SmaSimulation.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Charts\Charts.csproj">
+      <Project>{a2f337c5-07d7-4e31-9793-c9a62437acf6}</Project>
+      <Name>Charts</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FinancialData.Shared\FinancialData.Shared.csproj">
       <Project>{8fb9707d-8797-482b-a6dc-fe5d964ec555}</Project>
       <Name>FinancialData.Shared</Name>
