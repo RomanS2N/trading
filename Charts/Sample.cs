@@ -31,16 +31,5 @@ namespace Charts {
     public override string ToString() {
       return this.Instant + " " + this.Value;
     }
-    //public const int SampleBinarySize = sizeof(long) + sizeof(double);
-    //public Sample()
-    //{
-    //}
-    //public List<byte> GetBytes()
-    //{
-    //  List<byte> bytes = new List<byte>();
-    //  bytes.AddRange(BitConverter.GetBytes(this.Instant.Ticks));
-    //  bytes.AddRange(BitConverter.GetBytes(this.Value));
-    //  return bytes;
-    //}
   }
 }

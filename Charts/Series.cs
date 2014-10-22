@@ -14,7 +14,6 @@
    limitations under the License.
 */
 
-#define DRAW_ELLIPSE
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,41 +27,45 @@ using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Xml.Serialization;
 using System.Windows.Controls;
+using Simulation.Shared;
 
 namespace Charts {
   public class Series {
-    public bool IsRenderable { get { return this.Name != null; } }
+    public bool IsRenderable { get { return Name != null; } }
     public bool IsPrimary { get; set; }
     public string Name { get; set; }
+    private Color _color;
     public Brush Brush {
       get {
-        if (this.IsPrimary) {
-          return this._primarybrush;
+        if (IsPrimary) {
+          return _primarybrush;
         }
         else {
-          return this.Presenter != null ? this.Presenter.Brush : Brushes.Blue;
+          return new SolidColorBrush(_color);
         }
       }
     }
-    public SeriesPresenter Presenter { get; set; }
     private Brush _primarybrush = Brushes.BlueViolet;
     public List<Sample> Samples { get; set; }
-    public Series(string name, IEnumerable<Sample> samples) {
-      this.Name = name;
-      this.Samples = new List<Sample>(samples);
+    public Series(string name, IEnumerable<Sample> samples, ChartType chartType, Color color) {
+      Name = name;
+      Samples = new List<Sample>(samples);
+      ChartType = chartType;
+      _color = color;
     }
-    public Series(string name) {
-      this.Name = name;
-      this.Samples = new List<Sample>();
+    public Series(string name, ChartType chartType) {
+      Name = name;
+      Samples = new List<Sample>();
+      ChartType = chartType;
     }
     public Series() {
-      this.Samples = new List<Sample>();
+      Samples = new List<Sample>();
     }
     public Series Clone() {
-      return new Series(this.Name) { IsPrimary = this.IsPrimary };
+      return new Series(Name, ChartType) { IsPrimary = IsPrimary };
     }
     public void SetSamples(IEnumerable<Sample> samples) {
-      this.Samples = new List<Sample>(samples);
+      Samples = new List<Sample>(samples);
     }
     public static FrameworkElement GetRenderingLine(Series series, double actualWidth, double actualHeight, DateTime begin, DateTime end, double min, double max, bool DrawPoints) {
       Grid grid = new Grid();
@@ -145,22 +148,43 @@ namespace Charts {
       });
       return grid;
     }
-    public double MaxValue { get { return this.Samples.Max(sample => sample.Value); } }
-    public double MinValue { get { return this.Samples.Min(sample => sample.Value); } }
-    public static Series CompressSeries(Series series, bool useFirstSample) {
-      // ...X][..X][...X]
-      Series newSeries = series.Clone();
-      Dictionary<string, List<Sample>> bag = new Dictionary<string, List<Sample>>();
-      series.Samples.ForEach(sample => {
-        string key = sample.Instant.Month + "/" + sample.Instant.Year;
-        if (!bag.ContainsKey(key)) bag[key] = new List<Sample>();
-        bag[key].Add(new Sample(sample.Instant, sample.Value));
+    public static FrameworkElement GetRenderingTrades(Series series, double actualWidth, double actualHeight, DateTime begin, DateTime end, double min, double max) {
+      var trades = series.Samples.Cast<Trade>().ToList();
+      Grid grid = new Grid();
+      double deltatimePeriod = (end - begin).TotalMilliseconds;
+      double deltaMaxMin = max - min;
+      trades.ForEach(trade => {
+        if (trade.BeginInstant >= begin && trade.EndInstant <= end) {
+          Line line = new Line();
+          line.Fill = line.Stroke = trade.Side > PositionSide.Long ? Brushes.Green : Brushes.Red;
+          line.ToolTip = string.Format("{0} {1:F6} => {2} {3:F6}", trade.BeginInstant, trade.OpenPrice, trade.EndInstant, trade.ClosePrice);
+          //position computation
+          double beginDeltatime = (trade.BeginInstant - begin).TotalMilliseconds;
+          double beginXPosition = beginDeltatime * actualWidth / deltatimePeriod;
+          double endDeltatime = (trade.EndInstant - begin).TotalMilliseconds;
+          double endXPosition = endDeltatime * actualWidth / deltatimePeriod;
+          double zeroPosition = -min * actualHeight / deltaMaxMin;
+          double beginDeltaValue = trade.OpenPrice - min;
+          double beginYPosition = beginDeltaValue * actualHeight / deltaMaxMin;
+          double endDeltaValue = trade.OpenPrice - min;
+          double endYPosition = endDeltaValue * actualHeight / deltaMaxMin;
+          beginYPosition = actualHeight - beginYPosition; // inversion
+          endYPosition = actualHeight - endYPosition; // inversion
+          //position setting
+          line.HorizontalAlignment = HorizontalAlignment.Left;
+          line.VerticalAlignment = VerticalAlignment.Top;
+          line.X1 = beginXPosition;
+          line.Y1 = beginYPosition;
+          line.X2 = endXPosition;
+          line.Y2 = endYPosition;
+          grid.Children.Add(line);
+        }
       });
-      foreach (var item in bag) {
-        newSeries.Samples.Add(useFirstSample ? item.Value.First() : item.Value.Last());
-      }
-      return newSeries;
+      return grid;
     }
+    public double MaxValue { get { return Samples.Max(sample => sample.Value); } }
+    public double MinValue { get { return Samples.Min(sample => sample.Value); } }
+    public ChartType ChartType { get; set; }
   }
 }
 

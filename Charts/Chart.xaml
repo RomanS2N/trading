@@ -21,7 +21,8 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300"
              xmlns:my="clr-namespace:Charts">
-    <Grid>
+    <Grid MouseMove="Grid_MouseMove" MouseDown="Grid_MouseDown" MouseUp="Grid_MouseUp"
+          Background="Transparent">
         <my:Trend x:Name="trend" />
         <my:GridAndScales x:Name="gridAndScales" />
         <TextBlock Text="---" 

@@ -22,6 +22,8 @@ using System.Text;
 using YahooStockQuote.FinancialDataProvider;
 using TaLib.Extension;
 using Simulation.Shared;
+using Charts;
+using System.Windows.Media;
 
 namespace Simulation.BruteForce {
   class Program {
@@ -37,16 +39,29 @@ namespace Simulation.BruteForce {
       ISimulation bestSimulation = default(ISimulation);
       for (int small = 10; small < 20; small += 1) {
         for (int big = 30; big < 80; big += 2) {
+
           var simulation = SmaSimulation.CreateLongOnly(100);
           simulation.SimulationInfo = string.Format("EMA_SMALL: {0}, EMA_BIG: {1}", small, big);
           SimulationRunner simulationRunner = new SimulationRunner(bars, simulation);
-          simulationRunner.AddSerie("EMA_SMALL", bars.EMA(small));
-          simulationRunner.AddSerie("EMA_BIG", bars.EMA(big));
+          var emaSmall = bars.EMA(small);
+          var emaBig = bars.EMA(big);
+          simulationRunner.AddSerie("EMA_SMALL", emaSmall);
+          simulationRunner.AddSerie("EMA_BIG", emaBig);
           simulationRunner.Execute();
           //Console.WriteLine(simulation.GetReport());
           if (bestSimulation == default(ISimulation) || simulation.Earnings > bestSimulation.Earnings) {
             bestSimulation = simulation;
           }
+          ChartPool.CreateChart();
+          ChartPool.AddSeries(
+            new List<Series> {
+              new Series("Prices", bars.Select(x => new Sample(x.DateTime, (double)x.Close)), ChartType.Lines, Colors.Red),
+              new Series("EMA Small", emaSmall.Select(x => new Sample(x.DateTime, x.Value)), ChartType.Lines, Colors.Blue),
+              new Series("EMA Big", emaBig.Select(x => new Sample(x.DateTime, x.Value)), ChartType.Lines, Colors.DarkGreen),
+            }
+          );
+          Console.WriteLine(bestSimulation.GetReport());
+          Console.ReadKey(true);
         }
       }
       Console.WriteLine(bestSimulation.GetReport());

@@ -53,13 +53,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ChartPool.cs" />
     <Compile Include="BrushesFactory.cs" />
+    <Compile Include="ChartType.cs" />
     <Compile Include="GridAndScales.xaml.cs">
       <DependentUpon>GridAndScales.xaml</DependentUpon>
     </Compile>
     <Compile Include="Sample.cs" />
     <Compile Include="Series.cs" />
-    <Compile Include="SeriesPresenter.cs" />
+    <Compile Include="Trade.cs" />
     <Compile Include="Trend.xaml.cs">
       <DependentUpon>Trend.xaml</DependentUpon>
     </Compile>
@@ -117,6 +119,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Simulation.Shared\Simulation.Shared.csproj">
+      <Project>{2656ea8f-d554-404e-9a2c-753ecc754acc}</Project>
+      <Name>Simulation.Shared</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

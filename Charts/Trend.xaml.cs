@@ -39,21 +39,29 @@ namespace Charts {
     }
 
     Dictionary<Series, FrameworkElement> SeriesToFrameworkElementMapping = new Dictionary<Series, FrameworkElement>();
-    public string ChartType { get; set; }
+    //public string ChartType { get; set; }
 
     public void AddSeries(Series series) {
+      var begin = DateTime.Now;
       FrameworkElement element = null;
-      if (this.ChartType == "Line") {
-        element = Series.GetRenderingLine(series, this.ActualWidth, this.ActualHeight, this.Begin, this.End, this.Minimum, this.Maximum, /*series.IsPrimary*/ true);
+      if (series.ChartType == ChartType.Lines) {
+        element = Series.GetRenderingLine(series, this.ActualWidth, this.ActualHeight, this.Begin, this.End, this.Minimum, this.Maximum, false);
       }
-      else if (this.ChartType == "Columns") {
+      else if (series.ChartType == ChartType.DotsAndLines) {
+        element = Series.GetRenderingLine(series, this.ActualWidth, this.ActualHeight, this.Begin, this.End, this.Minimum, this.Maximum, true);
+      }
+      else if (series.ChartType == ChartType.Columns) {
         element = Series.GetRenderingColumns(series, this.ActualWidth, this.ActualHeight, this.Begin, this.End, this.Minimum, this.Maximum);
       }
+      else if (series.ChartType == ChartType.Trades) {
+        element = Series.GetRenderingTrades(series, this.ActualWidth, this.ActualHeight, this.Begin, this.End, this.Minimum, this.Maximum);
+      }
       else {
-        throw new Exception(string.Format("ChartType {0} desconocido...", this.ChartType));
+        throw new Exception(string.Format("ChartType {0} desconocido...", series.ChartType));
       }
       this.SeriesToFrameworkElementMapping[series] = element;
       this.RootPane.Children.Add(element);
+      Console.WriteLine("Delay: {0}", DateTime.Now - begin);
     }
 
     public void RemoveSeries(Series series) {
@@ -72,10 +80,15 @@ namespace Charts {
     public double Minimum { get; set; }
 
     protected override void OnRenderSizeChanged(SizeChangedInfo sizeInfo) {
+      Redraw();
+    }
+    public void Redraw() {
+      var begin = DateTime.Now;
       this.RootPane.Children.Clear();
       this.SeriesToFrameworkElementMapping.Keys.ToList().ForEach(series => {
         this.AddSeries(series);
       });
+      Console.WriteLine("OnRenderSizeChanged: {0}", DateTime.Now - begin);
     }
   }
 }
