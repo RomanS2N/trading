@@ -41,16 +41,20 @@ namespace Charts {
     public double FindAbsoluteMax() {
       double max = double.MinValue;
       this.Series.ForEach(series => {
-        double amax = series.Samples.FindAll(x => x.Instant >= this.Begin && x.Instant <= this.End).Max(x => x.Value);
-        if (amax > max) max = amax;
+        if (series.Drawables.Count > 0) {
+          double amax = series.Drawables.FindAll(x => x.Begin >= this.Begin && x.End <= this.End).Max(x => x.MaxValue);
+          if (amax > max) max = amax;
+        }
       });
       return max;
     }
     public double FindAbsoluteMin() {
       double min = double.MaxValue;
       this.Series.ForEach(series => {
-        double amin = series.Samples.FindAll(x => x.Instant >= this.Begin && x.Instant <= this.End).Min(x => x.Value);
-        if (amin < min) min = amin;
+        if (series.Drawables.Count > 0) {
+          double amin = series.Drawables.FindAll(x => x.Begin >= this.Begin && x.End <= this.End).Min(x => x.MinValue);
+          if (amin < min) min = amin;
+        }
       });
       return min;
     }

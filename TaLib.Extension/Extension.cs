@@ -26,7 +26,7 @@ using TicTacTec.TA.Library;
 namespace TaLib.Extension {
   public static class Extension {
     delegate TicTacTec.TA.Library.Core.RetCode TA7(int startIdx, int endIdx, double[] inReal, int optInTimePeriod, out int outBegIdx, out int outNbElement, double[] outReal);
-    static double[] RunTA7(this double[] series, TA7 handler, int period) {
+    static TaResult RunTA7(this double[] series, TA7 handler, int period) {
       int startIdx = 0;
       int endIdx = series.Length - 1;
       double[] inReal = new double[series.Length];
@@ -36,7 +36,7 @@ namespace TaLib.Extension {
       int outBegIdx;
       int outNbElement;
       handler(startIdx, endIdx, inReal, optInTimePeriod, out outBegIdx, out outNbElement, outReal);
-      return outReal;
+      return new TaResult(outReal, outBegIdx, outNbElement);
     }
 
     delegate TicTacTec.TA.Library.Core.RetCode TA12(int startIdx, int endIdx, double[] inReal, int optInTimePeriod, double optInNbDevUp, double optInNbDevDn,
@@ -56,57 +56,41 @@ namespace TaLib.Extension {
       return new Tuple<double[], double[], double[]>(outRealUp, outRealMid, outRealLo);
     }
 
-    public static double[] LinearRegressionSlope(this double[] series, int period = 0) {
+    public static TaResult LinearRegressionSlope(this double[] series, int period = 0) {
       return series.RunTA7(TicTacTec.TA.Library.Core.LinearRegSlope, period);
     }
 
     #region SMA
 
-    public static double[] SMA(this IEnumerable<double> series, int period) {
+    public static TaResult SMA(this IEnumerable<double> series, int period) {
       return series.ToArray().RunTA7(TicTacTec.TA.Library.Core.Sma, period);
     }
 
-    public static List<IInstantValue<double>> SMA(this IEnumerable<IQuote> series, int period) {
+    public static TaResult SMA(this IEnumerable<IQuote> series, int period) {
       var seriesArray = series.ToArray();
-      var values = seriesArray
+      var result = seriesArray
         .Select(x => (double)x.Ask)
         .ToArray()
-        .RunTA7(TicTacTec.TA.Library.Core.Sma, period)
-        .Select(x => new InstantValue<double>(x) as IInstantValue<double>)
-        .ToList();
-      int count = values.Count;
-      if (count != series.Count()) {
-        throw new Exception("Wrong values qty.");
-      }
-      for (int i = 0; i < count; i++) {
-        ((InstantValue<double>)values[i]).DateTime = seriesArray[i].DateTime;
-      }
-      return values;
+        .RunTA7(TicTacTec.TA.Library.Core.Sma, period);
+      result.SetDateTimes(seriesArray.Select(x => x.DateTime).ToList());
+      return result;
     }
 
-    public static List<IInstantValue<double>> SMA(this IEnumerable<IBar> series, int period) {
+    public static TaResult SMA(this IEnumerable<IBar> series, int period) {
       var seriesArray = series.ToArray();
-      var values = seriesArray
+      var result = seriesArray
         .Select(x => (double)x.Close)
         .ToArray()
-        .RunTA7(TicTacTec.TA.Library.Core.Sma, period)
-        .Select(x => new InstantValue<double>(x) as IInstantValue<double>)
-        .ToList();
-      int count = values.Count;
-      if (count != series.Count()) {
-        throw new Exception("Wrong values qty.");
-      }
-      for (int i = 0; i < count; i++) {
-        ((InstantValue<double>)values[i]).DateTime = seriesArray[i].DateTime;
-      }
-      return values;
+        .RunTA7(TicTacTec.TA.Library.Core.Sma, period);
+      result.SetDateTimes(seriesArray.Select(x => x.DateTime).ToList());
+      return result;
     }
 
     #endregion
 
     #region EMA
 
-    public static double[] EMA(this IEnumerable<double> series, int period) {
+    public static TaResult EMA(this IEnumerable<double> series, int period) {
       return series.ToArray().RunTA7(TicTacTec.TA.Library.Core.Ema, period);
     }
 

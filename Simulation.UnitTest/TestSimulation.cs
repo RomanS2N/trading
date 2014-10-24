@@ -36,7 +36,7 @@ namespace Simulation.UnitTest {
         // up trend
         ShortPositions.ForEach(x => ClosePosition(x));
         if (LongPositions.Count == 0) {
-          CreatePosition(PositionSide.Long, bar.Close, 1);
+          CreatePosition(PositionSide.Long, bar.DateTime, bar.Close, 1);
         }
       }
 
@@ -44,7 +44,7 @@ namespace Simulation.UnitTest {
         // down trend
         LongPositions.ForEach(x => ClosePosition(x));
         if (ShortPositions.Count == 0) {
-          CreatePosition(PositionSide.Short, bar.Close, 1);
+          CreatePosition(PositionSide.Short, bar.DateTime, bar.Close, 1);
         }
       }
     }

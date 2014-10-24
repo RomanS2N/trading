@@ -18,22 +18,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Charts {
-  public class Sample : IDrawable {
-    public DateTime Instant { get; set; }
-    public double Value { get; set; }
-    public Sample() { }
-    public Sample(DateTime instant, double value) {
-      Instant = instant;
-      Value = value;
-    }
-    public override string ToString() {
-      return Instant + " " + Value;
-    }
-    public double MinValue { get { return Value; } }
-    public double MaxValue { get { return Value; } }
-    public DateTime Begin { get { return Instant; } }
-    public DateTime End { get { return Instant; } }
+  public interface IDrawable {
+    double MinValue { get; }
+    double MaxValue { get; }
+    DateTime Begin { get; }
+    DateTime End { get; }
   }
 }

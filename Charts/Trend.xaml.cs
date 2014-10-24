@@ -42,7 +42,7 @@ namespace Charts {
     //public string ChartType { get; set; }
 
     public void AddSeries(Series series) {
-      var begin = DateTime.Now;
+      //var begin = DateTime.Now;
       FrameworkElement element = null;
       if (series.ChartType == ChartType.Lines) {
         element = Series.GetRenderingLine(series, this.ActualWidth, this.ActualHeight, this.Begin, this.End, this.Minimum, this.Maximum, false);
@@ -61,7 +61,7 @@ namespace Charts {
       }
       this.SeriesToFrameworkElementMapping[series] = element;
       this.RootPane.Children.Add(element);
-      Console.WriteLine("Delay: {0}", DateTime.Now - begin);
+      //Console.WriteLine("Delay: {0}", DateTime.Now - begin);
     }
 
     public void RemoveSeries(Series series) {
@@ -83,12 +83,12 @@ namespace Charts {
       Redraw();
     }
     public void Redraw() {
-      var begin = DateTime.Now;
+      //var begin = DateTime.Now;
       this.RootPane.Children.Clear();
       this.SeriesToFrameworkElementMapping.Keys.ToList().ForEach(series => {
         this.AddSeries(series);
       });
-      Console.WriteLine("OnRenderSizeChanged: {0}", DateTime.Now - begin);
+      //Console.WriteLine("OnRenderSizeChanged: {0}", DateTime.Now - begin);
     }
   }
 }

@@ -22,7 +22,11 @@ using System.Text;
 namespace Simulation.Shared {
   public interface IPosition {
     PositionSide Side { get; }
-    void Close(decimal price);
+    DateTime OpenDateTime { get; }
+    decimal OpenPrice { get; }
+    DateTime CloseDateTime { get; }
+    decimal ClosePrice { get; }
+    void Close(DateTime dateTime, decimal price);
     decimal Earnings { get; }
   }
 }

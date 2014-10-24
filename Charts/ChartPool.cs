@@ -48,10 +48,10 @@ namespace Charts {
           Thread.Sleep(100);
         }
         if (seriesList != null) {
-          _mainWindow.Begin = seriesList[0].Samples.First().Instant;
-          _mainWindow.End = seriesList[0].Samples.Last().Instant;
-          _mainWindow.Maximum = seriesList[0].Samples.Max(x => x.Value);
-          _mainWindow.Minimum = seriesList[0].Samples.Min(x => x.Value);
+          _mainWindow.Begin = seriesList[0].Drawables.First().Begin;
+          _mainWindow.End = seriesList[0].Drawables.Last().End;
+          _mainWindow.Maximum = seriesList[0].Drawables.Max(x => x.MaxValue);
+          _mainWindow.Minimum = seriesList[0].Drawables.Min(x => x.MinValue);
           seriesList.ForEach(x => _mainWindow.AddSeries(x));
         }
       }

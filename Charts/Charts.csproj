@@ -59,6 +59,7 @@
     <Compile Include="GridAndScales.xaml.cs">
       <DependentUpon>GridAndScales.xaml</DependentUpon>
     </Compile>
+    <Compile Include="IDrawable.cs" />
     <Compile Include="Sample.cs" />
     <Compile Include="Series.cs" />
     <Compile Include="Trade.cs" />

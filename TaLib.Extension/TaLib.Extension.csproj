@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="Extension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TaResult.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FinancialData.Shared\FinancialData.Shared.csproj">

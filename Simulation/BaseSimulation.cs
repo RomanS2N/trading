@@ -40,13 +40,16 @@ namespace Simulation {
     public List<IPosition> ShortPositions {
       get { return _positions.Where(x => x.Side == PositionSide.Short).ToList(); }
     }
-    public void CreatePosition(PositionSide positionSide, decimal price, int size) {
-      _positions.Add(new Position(positionSide, price, size));
+    public List<IPosition> ClosedPositions {
+      get { return _closedPositions.ToList(); }
+    }
+    public void CreatePosition(PositionSide positionSide, DateTime dateTime, decimal price, int size) {
+      _positions.Add(new Position(positionSide, dateTime, price, size));
     }
     public void ClosePosition(IPosition position) {
       _positions.Remove(position);
       _closedPositions.Add(position);
-      position.Close(_lastBar.Close);
+      position.Close(_lastBar.DateTime, _lastBar.Close);
     }
     public void OnBar(IBarContext context) {
       _lastBar = context.Bar;

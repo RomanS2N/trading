@@ -23,17 +23,21 @@ using System.Text;
 namespace Simulation {
   class Position : IPosition {
     public PositionSide Side { get; private set; }
+    public DateTime OpenDateTime { get; private set; }
     public decimal OpenPrice { get; private set; }
+    public DateTime CloseDateTime { get; private set; }
     public decimal ClosePrice { get; private set; }
     public int Size { get; private set; }
     public bool Closed { get; private set; }
-    public Position(PositionSide positionSide, decimal price, int size) {
+    public Position(PositionSide positionSide, DateTime dateTime, decimal price, int size) {
       Side = positionSide;
+      OpenDateTime = dateTime;
       OpenPrice = price;
       Size = size;
     }
-    public void Close(decimal price) {
+    public void Close(DateTime dateTime, decimal price) {
       if (!Closed) {
+        CloseDateTime = dateTime;
         ClosePrice = price;
         Closed = true;
       }

@@ -45,29 +45,29 @@ namespace Charts {
         }
       }
     }
-    private Brush _primarybrush = Brushes.BlueViolet;
-    public List<Sample> Samples { get; set; }
-    public Series(string name, IEnumerable<Sample> samples, ChartType chartType, Color color) {
+    private static Brush _primarybrush = Brushes.BlueViolet;
+    private static Color _undefinedColor = Colors.Black;
+    public List<IDrawable> Drawables { get; set; }
+    public Series(string name, ChartType chartType, Color color, IEnumerable<IDrawable> drawables) {
       Name = name;
-      Samples = new List<Sample>(samples);
+      Drawables = new List<IDrawable>(drawables);
       ChartType = chartType;
       _color = color;
     }
-    public Series(string name, ChartType chartType) {
-      Name = name;
-      Samples = new List<Sample>();
-      ChartType = chartType;
+    public Series(string name, ChartType chartType, Color color)
+      : this(name, chartType, color, new List<IDrawable>()) {
     }
-    public Series() {
-      Samples = new List<Sample>();
+    public Series(string name, ChartType chartType)
+      : this(name, chartType, _undefinedColor, new List<IDrawable>()) {
     }
     public Series Clone() {
       return new Series(Name, ChartType) { IsPrimary = IsPrimary };
     }
-    public void SetSamples(IEnumerable<Sample> samples) {
-      Samples = new List<Sample>(samples);
+    public void SetDrawables(IEnumerable<IDrawable> drawables) {
+      Drawables = new List<IDrawable>(drawables);
     }
     public static FrameworkElement GetRenderingLine(Series series, double actualWidth, double actualHeight, DateTime begin, DateTime end, double min, double max, bool DrawPoints) {
+      var samples = series.Drawables.Cast<Sample>().ToList();
       Grid grid = new Grid();
       Polyline line = new Polyline();
       line.ToolTip = series.Name;
@@ -77,7 +77,7 @@ namespace Charts {
       grid.Children.Add(line);
       double deltatimePeriod = (end - begin).TotalMilliseconds;
       double deltaMaxMin = max - min;
-      series.Samples.ForEach(sample => {
+      samples.ForEach(sample => {
         if (sample.Instant >= begin && sample.Instant <= end) {
           Point point = new Point();
           double deltatime = (sample.Instant - begin).TotalMilliseconds;
@@ -106,10 +106,11 @@ namespace Charts {
       if (min > 0 || max < 0) {
         throw new InvalidDataException("GetRenderingColumns: min must be smaller than zero and max must be greater than zero.");
       }
+      var samples = series.Drawables.Cast<Sample>().ToList();
       Grid grid = new Grid();
       double deltatimePeriod = (end - begin).TotalMilliseconds;
       double deltaMaxMin = max - min;
-      series.Samples.ForEach(sample => {
+      samples.ForEach(sample => {
         if (sample.Instant >= begin && sample.Instant <= end && sample.Value != 0) {
           Rectangle rectangle = new Rectangle();
           rectangle.Width = 10; // calculate
@@ -149,24 +150,24 @@ namespace Charts {
       return grid;
     }
     public static FrameworkElement GetRenderingTrades(Series series, double actualWidth, double actualHeight, DateTime begin, DateTime end, double min, double max) {
-      var trades = series.Samples.Cast<Trade>().ToList();
+      var trades = series.Drawables.Cast<Trade>().ToList();
       Grid grid = new Grid();
       double deltatimePeriod = (end - begin).TotalMilliseconds;
       double deltaMaxMin = max - min;
       trades.ForEach(trade => {
-        if (trade.BeginInstant >= begin && trade.EndInstant <= end) {
+        if (trade.Begin >= begin && trade.End <= end) {
           Line line = new Line();
           line.Fill = line.Stroke = trade.Side > PositionSide.Long ? Brushes.Green : Brushes.Red;
-          line.ToolTip = string.Format("{0} {1:F6} => {2} {3:F6}", trade.BeginInstant, trade.OpenPrice, trade.EndInstant, trade.ClosePrice);
+          line.ToolTip = string.Format("{0} {1:F6} => {2} {3:F6}", trade.Begin, trade.OpenPrice, trade.End, trade.ClosePrice);
           //position computation
-          double beginDeltatime = (trade.BeginInstant - begin).TotalMilliseconds;
+          double beginDeltatime = (trade.Begin - begin).TotalMilliseconds;
           double beginXPosition = beginDeltatime * actualWidth / deltatimePeriod;
-          double endDeltatime = (trade.EndInstant - begin).TotalMilliseconds;
+          double endDeltatime = (trade.End - begin).TotalMilliseconds;
           double endXPosition = endDeltatime * actualWidth / deltatimePeriod;
           double zeroPosition = -min * actualHeight / deltaMaxMin;
           double beginDeltaValue = trade.OpenPrice - min;
           double beginYPosition = beginDeltaValue * actualHeight / deltaMaxMin;
-          double endDeltaValue = trade.OpenPrice - min;
+          double endDeltaValue = trade.ClosePrice - min;
           double endYPosition = endDeltaValue * actualHeight / deltaMaxMin;
           beginYPosition = actualHeight - beginYPosition; // inversion
           endYPosition = actualHeight - endYPosition; // inversion
@@ -178,12 +179,31 @@ namespace Charts {
           line.X2 = endXPosition;
           line.Y2 = endYPosition;
           grid.Children.Add(line);
+          // open trade point
+          Ellipse ellipse = new Ellipse();
+          double ellipseDiameter = 5;
+          ellipse.HorizontalAlignment = HorizontalAlignment.Left;
+          ellipse.VerticalAlignment = VerticalAlignment.Top;
+          ellipse.Margin = new Thickness(line.X1 - (ellipseDiameter / 2.0), line.Y1 - (ellipseDiameter / 2.0), 0, 0);
+          ellipse.Stroke = Brushes.Black;
+          ellipse.Fill = Brushes.White;
+          ellipse.Width = ellipse.Height = ellipseDiameter;
+          grid.Children.Add(ellipse);
+          // close trade point
+          ellipse = new Ellipse();
+          ellipse.HorizontalAlignment = HorizontalAlignment.Left;
+          ellipse.VerticalAlignment = VerticalAlignment.Top;
+          ellipse.Margin = new Thickness(line.X2 - (ellipseDiameter / 2.0), line.Y2 - (ellipseDiameter / 2.0), 0, 0);
+          ellipse.Stroke = Brushes.Black;
+          ellipse.Fill = Brushes.White;
+          ellipse.Width = ellipse.Height = ellipseDiameter;
+          grid.Children.Add(ellipse);
         }
       });
       return grid;
     }
-    public double MaxValue { get { return Samples.Max(sample => sample.Value); } }
-    public double MinValue { get { return Samples.Min(sample => sample.Value); } }
+    public double MaxValue { get { return Drawables.Max(drawable => drawable.MaxValue); } }
+    public double MinValue { get { return Drawables.Min(drawable => drawable.MinValue); } }
     public ChartType ChartType { get; set; }
   }
 }

@@ -44,13 +44,13 @@ namespace Simulation.BruteForce {
       // up trend
       if (_longEnabled && smallEma.Value > (bigEma.Value + _threshold)) {
         if (LongPositions.Count == 0) {
-          CreatePosition(PositionSide.Long, bar.Close, 1);
+          CreatePosition(PositionSide.Long, bar.DateTime, bar.Close, 1);
         }
       }
       // down trend
       if (_shortEnabled && bigEma.Value > (smallEma.Value + _threshold)) {
         if (ShortPositions.Count == 0) {
-          CreatePosition(PositionSide.Short, bar.Close, 1);
+          CreatePosition(PositionSide.Short, bar.DateTime, bar.Close, 1);
         }
       }
     }
