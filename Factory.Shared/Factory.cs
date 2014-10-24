@@ -43,7 +43,7 @@ namespace Factory.Shared {
     }
 
     public static T Create<T>(string configurationEntry, bool isSingleton = false) {
-      //TODO: remover dependencia de ConfigurationManager, hacer depender de Configuration
+      //TODO: remove ConfigurationManager dependency (must depend on Configuration)
       string typeName = ConfigurationFactory.Configuration[configurationEntry];
 
       if (typeName == null) {

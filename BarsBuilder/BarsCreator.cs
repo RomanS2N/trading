@@ -107,7 +107,7 @@ namespace BarsBuilder {
       }
 
       FillTheGap(lastBarIndex, newQuoteBarIndex, _lastBar.Close);
-      // todo bar empieza con el close del anterior
+      // every bar starts with the close price of the previous one
       DateTime begin = new DateTime(newQuoteBarIndex * TimeFrame.Ticks);
       AddBar(new Bar(Asset, Source, TimeFrame, begin, _lastBar.Close));
       // agrego la info nueva

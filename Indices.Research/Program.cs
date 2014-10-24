@@ -44,10 +44,11 @@ namespace Indices.Research {
         lastBar = bar;
       }
 
-      var smoothDeltas = deltas.ToArray().SMA(6);
+      // TODO solve this
+      //var smoothDeltas = deltas.ToArray().SMA(6);
 
-      Console.WriteLine("Press a key to exit...");
-      Console.ReadKey(true);
+      //Console.WriteLine("Press a key to exit...");
+      //Console.ReadKey(true);
     }
   }
 }
