@@ -41,6 +41,7 @@
   <ItemGroup>
     <Compile Include="BarContext.cs" />
     <Compile Include="BaseSimulation.cs" />
+    <Compile Include="CloseReason.cs" />
     <Compile Include="Position.cs" />
     <Compile Include="SimulationRunner.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -53,6 +54,10 @@
     <ProjectReference Include="..\Simulation.Shared\Simulation.Shared.csproj">
       <Project>{2656ea8f-d554-404e-9a2c-753ecc754acc}</Project>
       <Name>Simulation.Shared</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TaLib.Extension\TaLib.Extension.csproj">
+      <Project>{d0d894f7-40ec-4f9b-bead-2adf7e2a9931}</Project>
+      <Name>TaLib.Extension</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -26,5 +26,6 @@ namespace TaLib.Extension {
         ((InstantValue<double>)InstantValues[i]).DateTime = dateTimes[i];
       }
     }
+    public int Count { get { return InstantValues.Count; } }
   }
 }

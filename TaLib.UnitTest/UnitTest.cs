@@ -37,7 +37,7 @@ namespace TaLib.UnitTest {
       var reader = BarsReader.Create(timeFrame, path);
       List<IBar> bars = reader.ReadAll();
       var smaValues = bars.SMA(60);
-      Assert.AreEqual(bars.Count, smaValues.Count);
+      Assert.AreEqual(bars.Count, smaValues.InstantValues.Count);
     }
 
     [TestMethod]
@@ -52,11 +52,13 @@ namespace TaLib.UnitTest {
       double[] prices;
       reader.ReadAll(out dateTimes, out prices);
 
-      var smaValues = prices.Bbands(15, 2, 2, TicTacTec.TA.Library.Core.MAType.Ema);
+      // corregir
+      throw new InvalidOperationException();
+      //var smaValues = prices.Bbands(15, 2, 2, TicTacTec.TA.Library.Core.MAType.Ema);
 
-      Assert.AreEqual(prices.Length, smaValues.Item1.Length);
-      Assert.AreEqual(prices.Length, smaValues.Item2.Length);
-      Assert.AreEqual(prices.Length, smaValues.Item3.Length);
+      //Assert.AreEqual(prices.Length, smaValues.Item1.Length);
+      //Assert.AreEqual(prices.Length, smaValues.Item2.Length);
+      //Assert.AreEqual(prices.Length, smaValues.Item3.Length);
     }
   }
 }

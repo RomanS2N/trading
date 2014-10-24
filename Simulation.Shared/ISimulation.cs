@@ -28,7 +28,6 @@ namespace Simulation.Shared {
     List<IPosition> LongPositions { get; }
     List<IPosition> ShortPositions { get; }
     void CreatePosition(PositionSide positionSide, DateTime dateTime, decimal price, int size);
-    void ClosePosition(IPosition position);
     void OnBar(IBarContext context);
     string GetReport();
     decimal Earnings { get; }

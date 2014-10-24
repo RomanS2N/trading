@@ -27,9 +27,15 @@ namespace Simulation {
     private List<IPosition> _positions;
     private List<IPosition> _closedPositions;
     private IBar _lastBar;
-    public BaseSimulation() {
+    public decimal? TakeProfitPoints { get; private set; }
+    public decimal? StopLossPoints { get; private set; }
+    public bool IsTrailingStop { get; private set; }
+    public BaseSimulation(decimal? takeProfitPoints, decimal? stopLossPoints, bool isTrailingStop = false) {
       _positions = new List<IPosition>();
       _closedPositions = new List<IPosition>();
+      TakeProfitPoints = takeProfitPoints;
+      StopLossPoints = stopLossPoints;
+      IsTrailingStop = isTrailingStop;
     }
     public List<IPosition> Positions {
       get { return _positions.ToList(); }
@@ -44,16 +50,24 @@ namespace Simulation {
       get { return _closedPositions.ToList(); }
     }
     public void CreatePosition(PositionSide positionSide, DateTime dateTime, decimal price, int size) {
-      _positions.Add(new Position(positionSide, dateTime, price, size));
-    }
-    public void ClosePosition(IPosition position) {
-      _positions.Remove(position);
-      _closedPositions.Add(position);
-      position.Close(_lastBar.DateTime, _lastBar.Close);
+      _positions.Add(new Position(positionSide, dateTime, price, size, TakeProfitPoints, StopLossPoints));
     }
     public void OnBar(IBarContext context) {
       _lastBar = context.Bar;
+
+      Positions.ForEach(x => x.VerifyTakeProfitAndStopLoss(_lastBar.DateTime, _lastBar.Close));
+      if (IsTrailingStop) Positions.ForEach(x => x.AdjustTrailingStopLoss(_lastBar.Close));
+
+      PurgePositions();
+
       OnBar_UserCode(context);
+
+      PurgePositions();
+    }
+    private void PurgePositions() {
+      var closedPositions = _positions.Where(x => x.Status == PositionStatus.Closed).ToList();
+      closedPositions.ForEach(x => _positions.Remove(x));
+      _closedPositions.AddRange(closedPositions);
     }
     public abstract void OnBar_UserCode(IBarContext context);
     public string GetReport() {

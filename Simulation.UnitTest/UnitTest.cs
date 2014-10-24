@@ -37,7 +37,7 @@ namespace Simulation.UnitTest {
       IBarPackage barPackage = (IBarPackage)samplePackage;
       List<IBar> bars = barPackage.Samples;
       // simulation
-      var simulation = new TestSimulation();
+      var simulation = new TestSimulation(10, 5, true);
       SimulationRunner simulationRunner = new SimulationRunner(bars, simulation);
       simulationRunner.AddSerie("EMA_SMALL", bars.EMA(10));
       simulationRunner.AddSerie("EMA_BIG", bars.EMA(20));

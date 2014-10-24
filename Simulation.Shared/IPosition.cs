@@ -26,7 +26,10 @@ namespace Simulation.Shared {
     decimal OpenPrice { get; }
     DateTime CloseDateTime { get; }
     decimal ClosePrice { get; }
-    void Close(DateTime dateTime, decimal price);
+    //protected void Close(DateTime dateTime, decimal price);
     decimal Earnings { get; }
+    PositionStatus Status { get; }
+    void VerifyTakeProfitAndStopLoss(DateTime dateTime, decimal price);
+    void AdjustTrailingStopLoss(decimal price);
   }
 }

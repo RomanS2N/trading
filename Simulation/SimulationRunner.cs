@@ -21,17 +21,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TaLib.Extension;
 
 namespace Simulation {
   public class SimulationRunner {
     private List<IBar> _bars;
     private ISimulation _simulation;
-    private Dictionary<string, List<IInstantValue<double>>> _series = new Dictionary<string, List<IInstantValue<double>>>();
+    private Dictionary<string, TaResult> _series = new Dictionary<string, TaResult>();
     public SimulationRunner(List<IBar> bars, ISimulation simulation) {
       _bars = bars;
       _simulation = simulation;
     }
-    public void AddSerie(string name, List<IInstantValue<double>> serie) {
+    public void AddSerie(string name, TaResult serie) {
       if (serie.Count != _bars.Count) {
         throw new Exception("Wrong samples qty.");
       }
@@ -39,8 +40,11 @@ namespace Simulation {
     }
     private Dictionary<string, IInstantValue<double>> GetSeriesValues(int index) {
       Dictionary<string, IInstantValue<double>> seriesValues = new Dictionary<string, IInstantValue<double>>();
-      foreach (string key in _series.Keys) {
-        seriesValues[key] = _series[key][index];
+      foreach (KeyValuePair<string, TaResult> serie in _series) {
+        if (serie.Value.FirstValidSample > index) {
+          return null;
+        }
+        seriesValues[serie.Key] = serie.Value.InstantValues[index];
       }
       return seriesValues;
     }
@@ -48,7 +52,9 @@ namespace Simulation {
       int count = _bars.Count;
       for (int i = 0; i < count; i++) {
         var seriesValues = GetSeriesValues(i);
-        _simulation.OnBar(new BarContext(_bars[i], seriesValues));
+        if (seriesValues != null) {
+          _simulation.OnBar(new BarContext(_bars[i], seriesValues));
+        }
       }
     }
   }

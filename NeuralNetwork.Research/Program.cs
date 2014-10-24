@@ -236,11 +236,11 @@ namespace NeuralNetwork.Research {
 
       //samples.ForEach(x => Console.WriteLine(x));
 
-      var openValues = samples.Select(x => (double)x.Open).ToArray();
-      var indicator1 = openValues.RSI(15);
-      var indicator2 = openValues.RSI(6);
-      var indicator3 = openValues.SMA(24);
-      var indicator4 = openValues.SMA(10);
+      //var openValues = samples.Select(x => (double)x.Open).ToArray();
+      var indicator1 = samples.RSI(15);
+      var indicator2 = samples.RSI(6);
+      var indicator3 = samples.SMA(24);
+      var indicator4 = samples.SMA(10);
 
       var stay = new double[] { 1, 0, 0 };
       var goLong = new double[] { 0, 1, 0 };
@@ -261,7 +261,14 @@ namespace NeuralNetwork.Research {
       int samplesCount = samples.Count;
 
       for (int i = 0; i < samplesCount; i++) {
-        var entry = new double[] { indicator1[i], indicator2[i], indicator3[i], indicator4[i], action[i][0], action[i][1], action[i][2] };
+        var entry = new double[] { 
+          indicator1.InstantValues[i].Value, 
+          indicator2.InstantValues[i].Value, 
+          indicator3.InstantValues[i].Value, 
+          indicator4.InstantValues[i].Value, 
+          action[i][0], 
+          action[i][1], 
+          action[i][2] };
         data.Add(entry);
       }
 
