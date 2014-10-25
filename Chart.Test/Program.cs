@@ -24,13 +24,7 @@ namespace Chart.Test {
         ChartType.Trades,
         Colors.Black,
         new List<IDrawable>{
-          new Trade{
-            Begin=new DateTime(2009, 6, 1),
-            End=new DateTime(2009, 6, 7),
-            OpenPrice=1542,
-            ClosePrice=1670,
-            Side=PositionSide.Long,
-          }
+          new Trade(new DateTime(2009, 6, 1), new DateTime(2009, 6, 7), PositionSide.Long, 1542, 1670),
         });
       ChartPool.AddSeries(new List<Series> { trades });
       Pause();

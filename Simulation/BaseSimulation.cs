@@ -24,8 +24,8 @@ using System.Threading.Tasks;
 
 namespace Simulation {
   public abstract class BaseSimulation : ISimulation {
-    private List<IPosition> _positions;
-    private List<IPosition> _closedPositions;
+    protected List<IPosition> _positions;
+    protected List<IPosition> _closedPositions;
     private IBar _lastBar;
     public decimal? TakeProfitPoints { get; private set; }
     public decimal? StopLossPoints { get; private set; }

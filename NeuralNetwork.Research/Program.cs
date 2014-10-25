@@ -230,7 +230,7 @@ namespace NeuralNetwork.Research {
       var symbol = YSQSymbol.YSQIndex.SNP;
       var begin = new DateTime(2000, 1, 1);
       var end = new DateTime(2015, 1, 1);
-      var samplePackage = new YSQProvider().GetHistory(new Asset { Name = symbol, Type = AssetType.Index }, begin, end, null);
+      var samplePackage = new YSQProvider().GetHistory(new Asset(symbol, AssetType.Index), begin, end, null);
       var barPackage = (IBarPackage)samplePackage;
       var samples = barPackage.Samples;
 

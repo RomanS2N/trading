@@ -33,7 +33,7 @@ namespace Simulation.UnitTest {
       DateTime begin = new DateTime(2000, 1, 1);
       DateTime end = new DateTime(2015, 1, 1);
       ISamplePackage samplePackage = new YSQProvider()
-        .GetHistory(new Asset { Name = symbol, Type = AssetType.Index }, begin, end, null);
+        .GetHistory(new Asset(symbol, AssetType.Index), begin, end, null);
       IBarPackage barPackage = (IBarPackage)samplePackage;
       List<IBar> bars = barPackage.Samples;
       // simulation

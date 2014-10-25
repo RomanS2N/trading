@@ -29,7 +29,7 @@ namespace FinancialData.Manager.UnitTest {
 	public class UnitTest {
 		[TestMethod]
 		public void FinancialDataManagerTest() {
-			Asset asset = new Asset { Name = "EUR/USD", Type = AssetType.Currency };
+			Asset asset = new Asset("EUR/USD", AssetType.Currency);
 			IDataSource source = new DukascopyDataSource();
 			DukascopyOfflineProvider.Instance.AsyncGetHistory(
 				asset,
@@ -43,7 +43,7 @@ namespace FinancialData.Manager.UnitTest {
 		}
 		[TestMethod]
 		public void FinancialDataBufferTest() {
-			Asset asset = new Asset { Name = "EUR/USD", Type = AssetType.Currency };
+			Asset asset = new Asset("EUR/USD", AssetType.Currency);
 			IDataSource source = new DukascopyDataSource();
 			FinancialDataBuffer buffer = new FinancialDataBuffer(10000);
 			DukascopyOfflineProvider.Instance.AsyncGetHistory(

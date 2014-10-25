@@ -23,6 +23,13 @@ using System.Threading.Tasks;
 
 namespace Charts {
   public class Trade : IDrawable {
+    public Trade(DateTime begin, DateTime end, PositionSide side, double openPrice, double closePrice) {
+      Begin = begin;
+      End = end;
+      Side = side;
+      OpenPrice = openPrice;
+      ClosePrice = closePrice;
+    }
     public DateTime Begin { get; set; }
     public DateTime End { get; set; }
     public PositionSide Side { get; set; }

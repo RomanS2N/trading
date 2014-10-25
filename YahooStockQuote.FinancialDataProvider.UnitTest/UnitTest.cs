@@ -24,7 +24,7 @@ namespace YahooStockQuote.FinancialDataProvider.UnitTest {
   public class UnitTest {
     [TestMethod]
     public void TestActualPrice() {
-      ISample sample = new YSQProvider().GetPrice(new Asset { Name = "MSFT", Type = AssetType.Stock });
+      ISample sample = new YSQProvider().GetPrice(new Asset("MSFT", AssetType.Stock));
       Assert.IsTrue(sample is IQuote);
       IQuote quote = (IQuote)sample;
       Assert.IsNotNull(quote.Asset);
@@ -35,7 +35,7 @@ namespace YahooStockQuote.FinancialDataProvider.UnitTest {
 
     [TestMethod]
     public void TestHistoricalPrices() {
-      ISamplePackage samplePackage = new YSQProvider().GetHistory(new Asset { Name = "MSFT", Type = AssetType.Stock }, new DateTime(2014, 1, 1), new DateTime(2014, 7, 1), null);
+      ISamplePackage samplePackage = new YSQProvider().GetHistory(new Asset("MSFT", AssetType.Stock), new DateTime(2014, 1, 1), new DateTime(2014, 7, 1), null);
       Assert.IsTrue(samplePackage is ISamplePackage<IBar>, "samplePackage no es instancia de ISamplePackage<IBar>");
       IBarPackage barPackage = (IBarPackage)samplePackage;
       Assert.IsNotNull(barPackage.Samples);

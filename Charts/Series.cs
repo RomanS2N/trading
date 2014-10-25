@@ -157,8 +157,11 @@ namespace Charts {
       trades.ForEach(trade => {
         if (trade.Begin >= begin && trade.End <= end) {
           Line line = new Line();
-          line.Fill = line.Stroke = trade.Side > PositionSide.Long ? Brushes.Green : Brushes.Red;
-          line.ToolTip = string.Format("{0} {1:F6} => {2} {3:F6}", trade.Begin, trade.OpenPrice, trade.End, trade.ClosePrice);
+          line.StrokeThickness = 2;
+          var sideColor = trade.Side == PositionSide.Long ? Brushes.Green : Brushes.Red;
+          line.Fill = line.Stroke = sideColor;
+          line.ToolTip = string.Format("Trade {0}  -  Duration {1}  -  Abs Delta {2:F6}",
+            trade.Side, trade.End - trade.Begin, Math.Abs(trade.ClosePrice - trade.OpenPrice));
           //position computation
           double beginDeltatime = (trade.Begin - begin).TotalMilliseconds;
           double beginXPosition = beginDeltatime * actualWidth / deltatimePeriod;
@@ -181,22 +184,24 @@ namespace Charts {
           grid.Children.Add(line);
           // open trade point
           Ellipse ellipse = new Ellipse();
-          double ellipseDiameter = 5;
+          double ellipseDiameter = 6;
           ellipse.HorizontalAlignment = HorizontalAlignment.Left;
           ellipse.VerticalAlignment = VerticalAlignment.Top;
           ellipse.Margin = new Thickness(line.X1 - (ellipseDiameter / 2.0), line.Y1 - (ellipseDiameter / 2.0), 0, 0);
-          ellipse.Stroke = Brushes.Black;
-          ellipse.Fill = Brushes.White;
+          ellipse.Stroke = sideColor;
+          ellipse.Fill = sideColor;
           ellipse.Width = ellipse.Height = ellipseDiameter;
+          ellipse.ToolTip = string.Format("Open {0}  -  {1:F6}", trade.Begin, trade.OpenPrice);
           grid.Children.Add(ellipse);
           // close trade point
           ellipse = new Ellipse();
           ellipse.HorizontalAlignment = HorizontalAlignment.Left;
           ellipse.VerticalAlignment = VerticalAlignment.Top;
           ellipse.Margin = new Thickness(line.X2 - (ellipseDiameter / 2.0), line.Y2 - (ellipseDiameter / 2.0), 0, 0);
-          ellipse.Stroke = Brushes.Black;
-          ellipse.Fill = Brushes.White;
+          ellipse.Stroke = sideColor;
+          ellipse.Fill = sideColor;
           ellipse.Width = ellipse.Height = ellipseDiameter;
+          ellipse.ToolTip = string.Format("Open {0}  -  {1:F6}", trade.End, trade.ClosePrice);
           grid.Children.Add(ellipse);
         }
       });

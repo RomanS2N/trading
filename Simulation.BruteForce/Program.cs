@@ -31,8 +31,7 @@ namespace Simulation.BruteForce {
       string symbol = YSQSymbol.YSQIndex.SNP;
       DateTime begin = new DateTime(2013, 1, 1);
       DateTime end = new DateTime(2014, 1, 1);
-      ISamplePackage samplePackage = new YSQProvider()
-        .GetHistory(new Asset { Name = symbol, Type = AssetType.Index }, begin, end, null);
+      ISamplePackage samplePackage = new YSQProvider().GetHistory(new Asset(symbol, AssetType.Index), begin, end, null);
       IBarPackage barPackage = (IBarPackage)samplePackage;
       List<IBar> bars = barPackage.Samples;
       // simulation
@@ -40,26 +39,36 @@ namespace Simulation.BruteForce {
       TaResult bestSimulationSmallEma = default(TaResult);
       TaResult bestSimulationBigEma = default(TaResult);
       ChartPool.CreateChart();
+      int configurationsCount = 0;
+      DateTime simulationsBegin = DateTime.Now;
       for (int small = 2; small < 14; small += 1) {
         for (int big = 30; big < 80; big += 1) {
-          var simulation = SmaSimulation.CreateBothSides(2, 30, 5);
-          simulation.SimulationInfo = string.Format("EMA_SMALL: {0}, EMA_BIG: {1}", small, big);
-          SimulationRunner simulationRunner = new SimulationRunner(bars, simulation);
-          var smallEma = bars.EMA(small);
-          var bigEma = bars.EMA(big);
-          simulationRunner.AddSerie("EMA_SMALL", smallEma);
-          simulationRunner.AddSerie("EMA_BIG", bigEma);
-          simulationRunner.Execute();
-          Console.WriteLine(simulation.GetReport());
-          if (bestSimulation == default(ISimulation) || simulation.Earnings > bestSimulation.Earnings) {
-            bestSimulation = simulation;
-            bestSimulationSmallEma = smallEma;
-            bestSimulationBigEma = bigEma;
+          for (int take = 10; take < 50; take += 2) {
+            for (int stop = 10; stop < 50; stop += 2) {
+              configurationsCount++;
+              var simulation = SmaSimulation.CreateLongOnly(2, take, stop);
+              simulation.SimulationInfo = string
+                .Format("EMA_SMALL: {0}, EMA_BIG: {1}, TakeProfit: {2}, StopLoss: {3}",
+                  small, big, take, stop);
+              SimulationRunner simulationRunner = new SimulationRunner(bars, simulation);
+              var smallEma = bars.EMA(small);
+              var bigEma = bars.EMA(big);
+              simulationRunner.AddSerie("EMA_SMALL", smallEma);
+              simulationRunner.AddSerie("EMA_BIG", bigEma);
+              simulationRunner.Execute();
+              Console.WriteLine(simulation.GetReport());
+              if (bestSimulation == default(ISimulation) || simulation.Earnings > bestSimulation.Earnings) {
+                bestSimulation = simulation;
+                bestSimulationSmallEma = smallEma;
+                bestSimulationBigEma = bigEma;
+              }
+              //ShowSimulation(simulation, bars, smallEma, bigEma);
+              //Console.ReadKey(true);
+            }
           }
-          //ShowSimulation(simulation, bars, smallEma, bigEma);
-          //Console.ReadKey(true);
         }
       }
+      Console.WriteLine("{0} configurations tested in {1}", configurationsCount, DateTime.Now - simulationsBegin);
       Console.WriteLine("Best simulation");
       ShowSimulation(bestSimulation, bars, bestSimulationSmallEma, bestSimulationBigEma);
       Console.ReadKey(true);
@@ -73,7 +82,7 @@ namespace Simulation.BruteForce {
           new Series("Prices", ChartType.Lines, Colors.Black, bars.Select(x => new Sample(x.DateTime, (double)x.Close))),
           new Series("EMA Small", ChartType.Lines, Colors.Blue, smallEma.InstantValues.Select(x => new Sample(x.DateTime, x.Value))),
           new Series("EMA Big", ChartType.Lines, Colors.DarkGreen, bigEma.InstantValues.Select(x => new Sample(x.DateTime, x.Value))),
-          new Series("Trades", ChartType.Trades, Colors.Purple, simulation.ClosedPositions.Select(x => new Trade { Begin=x.OpenDateTime, End=x.CloseDateTime, OpenPrice=(double)x.OpenPrice, ClosePrice=(double)x.ClosePrice })),
+          new Series("Trades", ChartType.Trades, Colors.Purple, simulation.ClosedPositions.Select(x => new Trade(x.OpenDateTime, x.CloseDateTime, x.Side, (double)x.OpenPrice, (double)x.ClosePrice))),
         }
       );
     }
