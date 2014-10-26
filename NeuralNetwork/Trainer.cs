@@ -66,7 +66,7 @@ namespace NeuralNetwork {
       }
     } // MakeTrainTest
 
-    static void Normalize(double[][] dataMatrix, int[] cols) {
+    public static void Normalize(double[][] dataMatrix, int[] cols) {
       // normalize specified cols by computing (x - mean) / sd for each value
       foreach (int col in cols) {
         double sum = 0.0;
@@ -103,7 +103,7 @@ namespace NeuralNetwork {
       if (newLine == true) Console.WriteLine("");
     }
 
-    public static void Execute(List<double[]> data) {
+    public static NeuralNetwork Execute(List<double[]> data) {
       //Console.WriteLine("\nBegin Build 2013 neural network demo");
       //Console.WriteLine("\nData is the famous Iris flower set.");
       //Console.WriteLine("Data is sepal length, sepal width, petal length, petal width -> iris species");
@@ -171,8 +171,7 @@ namespace NeuralNetwork {
       double testAcc = nn.Accuracy(testData);
       Console.WriteLine("\nAccuracy on test data = " + testAcc.ToString("F4"));
 
-      Console.WriteLine("\nEnd Build 2013 neural network demo\n");
-      Console.ReadLine();
+      return nn;
     }
   }
 }

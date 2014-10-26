@@ -256,7 +256,7 @@ namespace NeuralNetwork {
 
     // ----------------------------------------------------------------------------------------
 
-    private double[] ComputeOutputs(double[] xValues) {
+    public double[] ComputeOutputs(double[] xValues) {
       if (xValues.Length != numInput)
         throw new Exception("Bad xValues array length");
 
@@ -479,7 +479,7 @@ namespace NeuralNetwork {
       return (numCorrect * 1.0) / (numCorrect + numWrong); // ugly 2 - check for divide by zero
     }
 
-    private static int MaxIndex(double[] vector) // helper for Accuracy()
+    public static int MaxIndex(double[] vector) // helper for Accuracy()
     {
       // index of largest value
       int bigIndex = 0;

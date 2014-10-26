@@ -48,6 +48,10 @@ using System.Text;
 using System.Threading.Tasks;
 using YahooStockQuote.FinancialDataProvider;
 using TaLib.Extension;
+using Charts;
+using Simulation;
+using Simulation.Shared;
+using System.Windows.Media;
 
 namespace NeuralNetwork.Research {
   class Program {
@@ -228,25 +232,22 @@ namespace NeuralNetwork.Research {
       List<double[]> data = new List<double[]>();
 
       var symbol = YSQSymbol.YSQIndex.SNP;
-      var begin = new DateTime(2000, 1, 1);
-      var end = new DateTime(2015, 1, 1);
+      var begin = new DateTime(2004, 1, 1);
+      var end = new DateTime(2008, 1, 1);
       var samplePackage = new YSQProvider().GetHistory(new Asset(symbol, AssetType.Index), begin, end, null);
       var barPackage = (IBarPackage)samplePackage;
-      var samples = barPackage.Samples;
+      var bars = barPackage.Samples;
 
-      //samples.ForEach(x => Console.WriteLine(x));
-
-      //var openValues = samples.Select(x => (double)x.Open).ToArray();
-      var indicator1 = samples.RSI(15);
-      var indicator2 = samples.RSI(6);
-      var indicator3 = samples.SMA(24);
-      var indicator4 = samples.SMA(10);
+      TaResult indicator0 = bars.SMA(7);
+      TaResult indicator1 = bars.SMA(14);
+      TaResult indicator2 = bars.SMA(24);
+      TaResult indicator3 = bars.SMA(60);
 
       var stay = new double[] { 1, 0, 0 };
       var goLong = new double[] { 0, 1, 0 };
       var goShort = new double[] { 0, 0, 1 };
 
-      var deltaPrices = samples.Select(x => x.Close - x.Open).ToList();
+      var deltaPrices = bars.Select(x => x.Close - x.Open).ToList();
       var action = deltaPrices.Select(deltaPrice => {
         var abs = Math.Abs(deltaPrice);
         if (abs < 20) return stay;
@@ -258,21 +259,60 @@ namespace NeuralNetwork.Research {
       Console.WriteLine("Times to go long: {0}", action.Count(x => x == goLong));
       Console.WriteLine("Times to go short: {0}", action.Count(x => x == goShort));
 
-      int samplesCount = samples.Count;
+      int samplesCount = bars.Count;
 
       for (int i = 0; i < samplesCount; i++) {
         var entry = new double[] { 
+          indicator0.InstantValues[i].Value, 
           indicator1.InstantValues[i].Value, 
           indicator2.InstantValues[i].Value, 
           indicator3.InstantValues[i].Value, 
-          indicator4.InstantValues[i].Value, 
           action[i][0], 
           action[i][1], 
           action[i][2] };
         data.Add(entry);
       }
 
-      Trainer.Execute(data);
+      NeuralNetwork neuralNetwork = Trainer.Execute(data);
+
+      ChartPool.CreateChart();
+
+      int takeProfitPoints = 15;
+      int stopLossPoints = 10;
+      decimal intensityThreshold = 0.6m;
+      //int firstValidSample = 0;
+      //if (indicator0.FirstValidSample > firstValidSample) firstValidSample = indicator0.FirstValidSample;
+      //if (indicator1.FirstValidSample > firstValidSample) firstValidSample = indicator1.FirstValidSample;
+      //if (indicator2.FirstValidSample > firstValidSample) firstValidSample = indicator2.FirstValidSample;
+      //if (indicator3.FirstValidSample > firstValidSample) firstValidSample = indicator3.FirstValidSample;
+      //int indicatorsSamplesCount = indicator0.Count;
+      //int usefulSamples = indicatorsSamplesCount - firstValidSample;
+      //List<double[]> valuesToNormalize = new List<double[]>();
+      //for (int i = firstValidSample; i < indicatorsSamplesCount; i++) {
+      //  valuesToNormalize.Add(indicator0.InstantValues[i])
+      //}
+      var simulation = new NNSimulation(neuralNetwork, intensityThreshold, takeProfitPoints, stopLossPoints, true);
+      SimulationRunner simulationRunner = new SimulationRunner(bars, simulation);
+      simulationRunner.AddSerie("INDICATOR_0", indicator0);
+      simulationRunner.AddSerie("INDICATOR_1", indicator1);
+      simulationRunner.AddSerie("INDICATOR_2", indicator2);
+      simulationRunner.AddSerie("INDICATOR_3", indicator3);
+      simulationRunner.Execute();
+      ShowSimulation(simulation, bars, indicator0, indicator1, indicator2, indicator3);
+    }
+    static void ShowSimulation(ISimulation simulation, List<IBar> bars, TaResult indicator0, TaResult indicator1, TaResult indicator2, TaResult indicator3) {
+      Console.WriteLine(simulation.GetReport());
+      ChartPool.ClearSeries();
+      ChartPool.AddSeries(
+        new List<Series> {
+          new Series("Prices", ChartType.Lines, Colors.Black, bars.Select(x => new Sample(x.DateTime, (double)x.Close))),
+          new Series("indicator0", ChartType.Lines, Colors.Blue, indicator0.InstantValues.Select(x => new Sample(x.DateTime, x.Value))),
+          new Series("indicator1", ChartType.Lines, Colors.DarkGreen, indicator1.InstantValues.Select(x => new Sample(x.DateTime, x.Value))),
+          new Series("indicator2", ChartType.Lines, Colors.DarkGreen, indicator2.InstantValues.Select(x => new Sample(x.DateTime, x.Value))),
+          new Series("indicator3", ChartType.Lines, Colors.DarkGreen, indicator3.InstantValues.Select(x => new Sample(x.DateTime, x.Value))),
+          new Series("Trades", ChartType.Trades, Colors.Purple, simulation.ClosedPositions.Select(x => new Trade(x.OpenDateTime, x.CloseDateTime, x.Side, (double)x.OpenPrice, (double)x.ClosePrice))),
+        }
+      );
     }
     static void Main(string[] args) {
       TrainWithIndexData();
