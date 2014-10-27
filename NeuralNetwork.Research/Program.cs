@@ -243,6 +243,19 @@ namespace NeuralNetwork.Research {
       TaResult indicator2 = bars.SMA(24);
       TaResult indicator3 = bars.SMA(60);
 
+      // discard bars and indicators previous to valid series
+      int firstValidSampleOnSeries = indicator0.FirstValidSample;
+      if (indicator1.FirstValidSample > firstValidSampleOnSeries) firstValidSampleOnSeries = indicator1.FirstValidSample;
+      if (indicator2.FirstValidSample > firstValidSampleOnSeries) firstValidSampleOnSeries = indicator2.FirstValidSample;
+      if (indicator3.FirstValidSample > firstValidSampleOnSeries) firstValidSampleOnSeries = indicator3.FirstValidSample;
+      Console.WriteLine("First valid sample on series: {0}", firstValidSampleOnSeries);
+      bars.RemoveRange(0, firstValidSampleOnSeries);
+      indicator0.DiscardFirstSamples(firstValidSampleOnSeries);
+      indicator1.DiscardFirstSamples(firstValidSampleOnSeries);
+      indicator2.DiscardFirstSamples(firstValidSampleOnSeries);
+      indicator3.DiscardFirstSamples(firstValidSampleOnSeries);
+      Console.WriteLine("Invalid samples removed");
+
       var stay = new double[] { 1, 0, 0 };
       var goLong = new double[] { 0, 1, 0 };
       var goShort = new double[] { 0, 0, 1 };
@@ -250,7 +263,7 @@ namespace NeuralNetwork.Research {
       var deltaPrices = bars.Select(x => x.Close - x.Open).ToList();
       var action = deltaPrices.Select(deltaPrice => {
         var abs = Math.Abs(deltaPrice);
-        if (abs < 20) return stay;
+        if (abs < 5) return stay;
         if (deltaPrice < 0) return goShort;
         return goLong;
       }).ToList();
@@ -279,18 +292,13 @@ namespace NeuralNetwork.Research {
 
       int takeProfitPoints = 15;
       int stopLossPoints = 10;
-      decimal intensityThreshold = 0.6m;
-      //int firstValidSample = 0;
-      //if (indicator0.FirstValidSample > firstValidSample) firstValidSample = indicator0.FirstValidSample;
-      //if (indicator1.FirstValidSample > firstValidSample) firstValidSample = indicator1.FirstValidSample;
-      //if (indicator2.FirstValidSample > firstValidSample) firstValidSample = indicator2.FirstValidSample;
-      //if (indicator3.FirstValidSample > firstValidSample) firstValidSample = indicator3.FirstValidSample;
-      //int indicatorsSamplesCount = indicator0.Count;
-      //int usefulSamples = indicatorsSamplesCount - firstValidSample;
-      //List<double[]> valuesToNormalize = new List<double[]>();
-      //for (int i = firstValidSample; i < indicatorsSamplesCount; i++) {
-      //  valuesToNormalize.Add(indicator0.InstantValues[i])
-      //}
+      decimal intensityThreshold = 0.0m;
+
+      indicator0.Normalize();
+      indicator1.Normalize();
+      indicator2.Normalize();
+      indicator3.Normalize();
+
       var simulation = new NNSimulation(neuralNetwork, intensityThreshold, takeProfitPoints, stopLossPoints, true);
       SimulationRunner simulationRunner = new SimulationRunner(bars, simulation);
       simulationRunner.AddSerie("INDICATOR_0", indicator0);

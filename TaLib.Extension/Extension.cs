@@ -36,7 +36,7 @@ namespace TaLib.Extension {
       int outBegIdx;
       int outNbElement;
       handler(startIdx, endIdx, inReal, optInTimePeriod, out outBegIdx, out outNbElement, outReal);
-      return new TaResult(outReal.Reverse().ToArray(), outBegIdx, outNbElement);
+      return new TaResult(outReal.Reverse().ToArray(), outBegIdx/*, outNbElement*/);
     }
 
     delegate TicTacTec.TA.Library.Core.RetCode TA12(int startIdx, int endIdx, double[] inReal, int optInTimePeriod, double optInNbDevUp, double optInNbDevDn,

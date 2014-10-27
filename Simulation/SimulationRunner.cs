@@ -44,7 +44,9 @@ namespace Simulation {
         if (serie.Value.FirstValidSample > index) {
           return null;
         }
-        seriesValues[serie.Key] = serie.Value.InstantValues[index];
+        string serieKey = serie.Key;
+        TaResult serieValue = serie.Value;
+        seriesValues[serieKey] = serieValue.InstantValues[index];
       }
       return seriesValues;
     }

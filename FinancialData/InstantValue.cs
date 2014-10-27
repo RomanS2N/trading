@@ -24,6 +24,7 @@ namespace FinancialData {
   public class InstantValue<T> : IInstantValue<T> {
     public DateTime DateTime { get; set; }
     public T Value { get; set; }
+    public T NormalizedValue { get; set; }
     public InstantValue(T value) {
       Value = value;
     }

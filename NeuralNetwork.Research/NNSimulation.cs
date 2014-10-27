@@ -35,19 +35,17 @@ namespace NeuralNetwork.Research {
       IInstantValue<double> indicator2 = seriesValues["INDICATOR_2"];
       IInstantValue<double> indicator3 = seriesValues["INDICATOR_3"];
       var values = new double[] { 
-        indicator0.Value, 
-        indicator1.Value, 
-        indicator2.Value, 
-        indicator3.Value
+        indicator0.NormalizedValue, 
+        indicator1.NormalizedValue, 
+        indicator2.NormalizedValue, 
+        indicator3.NormalizedValue,
       };
-      var valuesArray = new List<double[]> { values }.ToArray();
-      Trainer.Normalize(valuesArray, new int[] { 0, 1, 2, 3 });
-      double[] output = NeuralNetwork.ComputeOutputs(valuesArray[0]);
+      double[] output = NeuralNetwork.ComputeOutputs(values);
       Console.WriteLine("{0}, {1}, {2}, {3} => {4}, {5}, {6}",
-        indicator0.Value,
-        indicator1.Value,
-        indicator2.Value,
-        indicator3.Value,
+        indicator0.NormalizedValue,
+        indicator1.NormalizedValue,
+        indicator2.NormalizedValue,
+        indicator3.NormalizedValue,
         output[0], output[1], output[2]);
       int maxIndex = NeuralNetwork.MaxIndex(output);
       Operation operation = (Operation)maxIndex;
