@@ -50,5 +50,21 @@ namespace TaLib.Extension {
       FirstValidSample = 0;
       //ValuesCount -= count;
     }
+
+    public static int GetFirstValidSample(List<TaResult> resultsList) {
+      int firstValidSampleOnSeries = 0;
+      foreach (TaResult result in resultsList) {
+        if (result.FirstValidSample > firstValidSampleOnSeries) {
+          firstValidSampleOnSeries = result.FirstValidSample;
+        }
+      }
+      return firstValidSampleOnSeries;
+    }
+
+    public static void DiscardFirstSamples(List<TaResult> resultsList, int firstValidSampleOnSeries) {
+      foreach (TaResult result in resultsList) {
+        result.DiscardFirstSamples(firstValidSampleOnSeries);
+      }
+    }
   }
 }

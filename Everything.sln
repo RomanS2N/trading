@@ -273,6 +273,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Charts", "Charts\Charts.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chart.Test", "Chart.Test\Chart.Test.csproj", "{67D0DE28-DD16-4903-9050-EE394073773A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PatternRecognizer", "PatternRecognizer\PatternRecognizer.csproj", "{A0B7E59A-BBA1-4FB8-85C5-22DC4566AE9E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -1160,6 +1162,16 @@ Global
 		{67D0DE28-DD16-4903-9050-EE394073773A}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{67D0DE28-DD16-4903-9050-EE394073773A}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{67D0DE28-DD16-4903-9050-EE394073773A}.Release|x86.ActiveCfg = Release|Any CPU
+		{A0B7E59A-BBA1-4FB8-85C5-22DC4566AE9E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0B7E59A-BBA1-4FB8-85C5-22DC4566AE9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0B7E59A-BBA1-4FB8-85C5-22DC4566AE9E}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{A0B7E59A-BBA1-4FB8-85C5-22DC4566AE9E}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{A0B7E59A-BBA1-4FB8-85C5-22DC4566AE9E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A0B7E59A-BBA1-4FB8-85C5-22DC4566AE9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0B7E59A-BBA1-4FB8-85C5-22DC4566AE9E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A0B7E59A-BBA1-4FB8-85C5-22DC4566AE9E}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{A0B7E59A-BBA1-4FB8-85C5-22DC4566AE9E}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{A0B7E59A-BBA1-4FB8-85C5-22DC4566AE9E}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -1284,6 +1296,7 @@ Global
 		{900486A3-5E1E-41FF-904A-A92B05E5460E} = {44CAE3AB-7E75-4CDE-8ABC-F4F5A77B4D1E}
 		{F45CCB47-1DF1-482A-B967-6C8397CD727E} = {8A232798-38B0-4B60-B9C2-7A2869CD2BC3}
 		{F86373DB-39FD-49B8-AAD6-7EE54B1450F2} = {8A232798-38B0-4B60-B9C2-7A2869CD2BC3}
+		{A0B7E59A-BBA1-4FB8-85C5-22DC4566AE9E} = {8A232798-38B0-4B60-B9C2-7A2869CD2BC3}
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = Everything.vsmdi
