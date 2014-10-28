@@ -243,19 +243,17 @@ namespace NeuralNetwork.Research {
       TaResult indicator2 = bars.SMA(24);
       TaResult indicator3 = bars.SMA(60);
 
+      List<TaResult> indicatorsList = new List<TaResult> { indicator0, indicator1, indicator2, indicator3 };
+
       // discard bars and indicators previous to valid series
-      int firstValidSampleOnSeries = indicator0.FirstValidSample;
-      if (indicator1.FirstValidSample > firstValidSampleOnSeries) firstValidSampleOnSeries = indicator1.FirstValidSample;
-      if (indicator2.FirstValidSample > firstValidSampleOnSeries) firstValidSampleOnSeries = indicator2.FirstValidSample;
-      if (indicator3.FirstValidSample > firstValidSampleOnSeries) firstValidSampleOnSeries = indicator3.FirstValidSample;
+      int firstValidSampleOnSeries = TaResult.GetFirstValidSample(indicatorsList);
       Console.WriteLine("First valid sample on series: {0}", firstValidSampleOnSeries);
+      
       bars.RemoveRange(0, firstValidSampleOnSeries);
-      indicator0.DiscardFirstSamples(firstValidSampleOnSeries);
-      indicator1.DiscardFirstSamples(firstValidSampleOnSeries);
-      indicator2.DiscardFirstSamples(firstValidSampleOnSeries);
-      indicator3.DiscardFirstSamples(firstValidSampleOnSeries);
+      TaResult.DiscardFirstSamples(indicatorsList, firstValidSampleOnSeries);
       Console.WriteLine("Invalid samples removed");
 
+      // possible answers
       var stay = new double[] { 1, 0, 0 };
       var goLong = new double[] { 0, 1, 0 };
       var goShort = new double[] { 0, 0, 1 };
