@@ -126,7 +126,7 @@ namespace Charts {
           //position setting
           rectangle.HorizontalAlignment = HorizontalAlignment.Left;
           rectangle.VerticalAlignment = VerticalAlignment.Top;
-          rectangle.Margin = new Thickness(xPosition - 1, sample.Value < 0 ? zeroPosition : YPosition, 0, 0);
+          rectangle.Margin = new Thickness(xPosition - 1, zeroPosition < YPosition ? zeroPosition : YPosition, 0, 0);
           //size adjustment
           //TODO: generate negative columns
           double rectangleHeight = Math.Abs(zeroPosition - YPosition);
