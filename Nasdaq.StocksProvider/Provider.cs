@@ -15,24 +15,23 @@
 */
 
 using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using StringUtils;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace YahooStockQuote.UnitTest {
-  [TestClass]
-  public class UnitTest {
-    [TestMethod]
-    public void TestGetPrice() {
-      var price = YSQReader.GetPrice("MSFT");
-      price = Cleaner.CleanWebResult(price);
-      Assert.IsNotNull(price);
-      Assert.IsTrue(float.Parse(price) > 0);
-    }
-
-    [TestMethod]
-    public void TestMethod() {
-      var prices = YSQReader.GetHistoricalPrices("MSFT", new DateTime(2000, 1, 1), new DateTime(2015, 1, 1));
-      Assert.IsNotNull(prices);
+namespace Nasdaq.StocksProvider {
+  public class Provider {
+    public static List<NasdaqStock> GetStocks() {
+      var files = new List<string> { @"C:\stocks\AMEX.csv", @"C:\stocks\NASDAQ.csv", @"C:\stocks\NYSE.csv" };
+      var lines = files.SelectMany(file => {
+        var _lines = File.ReadAllLines(file).ToList();
+        _lines.RemoveAt(0);
+        return _lines;
+      });
+      var stocks = lines.Select(line => new NasdaqStock(line));
+      return stocks.ToList();
     }
   }
 }
