@@ -48,6 +48,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\FinancialData.Shared\FinancialData.Shared.csproj">
+      <Project>{8fb9707d-8797-482b-a6dc-fe5d964ec555}</Project>
+      <Name>FinancialData.Shared</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Yahoo.YQL.StocksProvider\Yahoo.YQL.StocksProvider.csproj">
       <Project>{a6245d07-f45b-4a48-8d5c-5e16226b5f3d}</Project>
       <Name>Yahoo.YQL.StocksProvider</Name>

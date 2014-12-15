@@ -44,6 +44,10 @@
     <Compile Include="YahooStock.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\FinancialData.Shared\FinancialData.Shared.csproj">
+      <Project>{8fb9707d-8797-482b-a6dc-fe5d964ec555}</Project>
+      <Name>FinancialData.Shared</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WebReader\WebReader.csproj">
       <Project>{9fadeaf4-58b3-4c7b-a845-749eaaac1855}</Project>
       <Name>WebReader</Name>
